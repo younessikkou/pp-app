@@ -1,0 +1,48 @@
+{% extends '../base/base.html' %}
+
+{% block content %}
+  
+  <div class="main-content">
+    <div class="row">
+      <div class="col col-md-12">
+      </div>
+      <div class="col col-md-12" style=" text-align: right!important; float: right;">
+         
+      </div>
+    </div>
+
+   
+<table id="files_list" class="table table-striped dt-responsive  " style="width:100%">
+            <thead class="thead_dark">
+                <tr>
+                    <th class="th_text">عدد</th>
+                    <th class="th_text">تاريخ التوصل</th>
+                    <th class="th_text">رقم الارسال</th>
+                    <th class="th_text">رقم المحضر</th>
+                    <th class="th_text">الضابطة القضائية</th>
+                    <th class="th_text">رمز محضر النيابة العامة</th>
+                    <th class="th_text">رقم شكاية النيابة العامة</th> 
+                    <th class="th_text">ملاحظات</th>
+                    <th class="th_text">عدد مرات البحث</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% if data %}
+                {% for d in data %}
+                <tr>
+                    <td> {{ d.id }} </td>
+                    <td> {{ d.date_arr }} </td>
+                    <td> {{ d.num_env }} </td>
+                    <td> {{ d.num_rapp_pj }} </td>
+                    <td> {{ d.pj }} </td>
+                    <td> {{ d.num_rapp_pp }} </td>
+                    <td> {{ d.num_plaint }} </td>
+                    <td> {{ d.note }} </td>
+                    <td> {{ d.search_indice }} </td>
+                </tr>
+                  {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+  </div>
+{% endblock %}

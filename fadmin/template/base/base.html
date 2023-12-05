@@ -1,0 +1,62 @@
+{% load static %}
+{% load crispy_forms_tags %} 
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+  
+    <!-- Including the bootstrap CDN -->
+    <link rel="stylesheet" href= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> 
+    </script> 
+    <script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"> 
+    </script> 
+    <script src= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"> 
+    </script> 
+    <!--   External CSS  -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">   
+ <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+ <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css" rel="stylesheet">
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet"> </link>
+<link rel="stylesheet" href="{% static '/css/style_datatable.css' %}">
+<link rel="stylesheet" href="{% static '/css/css.css' %}">
+</head> 
+  
+<body> 
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+    <script src="{% static '/js/js_datatable.js' %}"></script>
+  
+    <!-- Creating a navigation bar using the
+         .navbar class of bootstrap -->
+
+    <!-- Top navigation -->
+    <div class="topnav">
+
+        <!-- Centered link -->
+        <div class="topnav-centered">
+        <a href="{% url 'ajtrapp' %}" class="active">  اضافة محضر </a>
+        </div>
+
+        <div class="topnav-left">
+            <a href="{% url 'home' %}">  البحث عن محضر </a>
+        </div>
+    
+        <!-- Right-aligned links -->
+        <div class="topnav-right">
+        <img src="{% static 'images/logo.png' %}" class="logo" alt="My image" style="margin-right:50px;">
+        </div>
+    
+    </div>
+    {% block content %}
+    {% endblock %}
+</body> 
+  
+</html> 
