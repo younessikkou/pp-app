@@ -20,7 +20,5 @@ from .views import Fadm
 
 urlpatterns = [
     path('',Fadm.as_view(), name='home'),
-    path('submitrapp',Fadm.submitrapp, name='submittrapp'),
-    path('ajtrapp',Fadm.ajtrapp, name='ajtrapp'),
-    
+    path('submitrapp',Fadm.submitrapp, name='submittrapp'),    
 ]

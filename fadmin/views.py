@@ -11,13 +11,14 @@ from .forms import FadminForm
 class Fadm(APIView):
   def get(self, request):
     fadmin = Fadmin.objects.all()
-    data = {'data' : list(fadmin.values())}
+    context ={} 
+    context['form']= FadminForm()
+    data = {
+      'data' : list(fadmin.values()),
+      'form' : FadminForm()
+    }
     return render(request , 'fadmin/recherche.html' , data)
 
-  def ajtrapp(request): 
-    context ={} 
-    context['form']= FadminForm() 
-    return render(request, "fadmin/Ajrapp.html", context) 
 
   def submitrapp(request):
     # dictionary for initial data with 
