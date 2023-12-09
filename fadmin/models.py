@@ -15,17 +15,17 @@ class Pjs(models.Model):
     reporter = models.ForeignKey(Type_pj, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.name}"
+        return self.name
 
 class Fadmin(models.Model):
     date_arr = models.DateField(auto_now_add=True, verbose_name="تاريخ التوصل")
-    num_env = models.CharField(max_length=20, verbose_name="رقم الارسال")
-    num_rapp_pj = models.CharField(max_length=20, verbose_name="رقم محضر الضابطة القضائية")
-    num_rapp_pp = models.CharField(max_length=20 , verbose_name="رقم محضر النيابة العامة")
-    num_plaint = models.CharField(max_length=20, verbose_name="رقم الشكاية")
+    num_env = models.CharField(max_length=20, verbose_name="رقم الارسال", blank=True , null=True)
+    num_rapp_pj = models.CharField(max_length=20, verbose_name="رقم محضر الضابطة القضائية", blank=True , null=True)
+    num_rapp_pp = models.CharField(max_length=20 , verbose_name="رقم محضر النيابة العامة", blank=True , null=True)
+    num_plaint = models.CharField(max_length=20, verbose_name="رقم الشكاية", blank=True , null=True)
     note = models.CharField(max_length=100, verbose_name="ملاحظات" , blank=True , null=True)
     search_indice = models.IntegerField(verbose_name="عدد مرات البحث", blank=True , null=True)
-    pj = models.OneToOneField(Pjs,on_delete=models.CASCADE,primary_key=True,verbose_name="الضابطة القضائية")
+    type_pj = models.ForeignKey(Pjs, on_delete=models.CASCADE,related_name="fadmins",verbose_name="الضابطة القضائية")
 
 
     def __str__(self):

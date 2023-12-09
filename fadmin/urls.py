@@ -20,5 +20,8 @@ from .views import Fadm
 
 urlpatterns = [
     path('',Fadm.as_view(), name='home'),
-    path('submitrapp',Fadm.submitrapp, name='submittrapp'),    
+    path('submitrapp',Fadm.submitrapp, name='submittrapp'),
+    path('delete_item/<id>',Fadm.delete_item, name='delete_item'),
+    path('update_item/<id>',Fadm.update_item, name='update_item'),  
+    path('ajax_pj',Fadm.ajax_pj, name='ajax_pj'),  
 ]

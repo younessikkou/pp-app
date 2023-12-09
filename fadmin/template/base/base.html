@@ -22,8 +22,9 @@
  <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet">
  <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css" rel="stylesheet">
  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet"> </link>
-<link rel="stylesheet" href="{% static '/css/style_datatable.css' %}">
-<link rel="stylesheet" href="{% static '/css/css.css' %}">
+ <link rel="stylesheet" href="{% static '/css/style_datatable.css' %}">
+ <link rel="stylesheet" href="{% static '/css/css.css' %}">
+ <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 </head> 
   
 <body> 
@@ -67,10 +68,62 @@
             </button>
             </div>
             <div class="modal-body">
-               <form action = {% url 'submittrapp' %} method = "post"> 
+               <form action = "{% url 'submittrapp' %}" method = "post" data-validate-ajax-url = "{% url 'ajax_pj' %}">
+                <div class="container">
                     {% csrf_token %} 
-                    {{ form|crispy }}
-                    <button class="btn btn-danger" type="submit" value="Submit">حفظ المعلومات</button>
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form.num_env|as_crispy_field }}
+                        </div>
+                        <div class="col-6">
+                            {{ form.num_rapp_pj|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form.num_rapp_pp|as_crispy_field }}
+                        </div>
+                        <div class="col-6">
+                            {{ form.num_rapp_pp|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form.num_plaint|as_crispy_field }}
+                        </div>
+                        <div class="col-6">  
+                            {{ form.note|as_crispy_field }}
+                        </div>
+                    </div>
+                    
+                    
+                        <div class="row">>
+                            <div class="col-6">
+                                <h6 class="pj-name">صنف الضابطة القضائية</h6>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    البحث
+                                    </button>
+                                    {% if data2 %}
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    {% for d in data2 %}
+                                    <a class="dropdown-item ajax-call" href="#" data-value="{{ d.name_pj }}">{{ d.name_pj }}</a>
+                                    {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select class="form-control" id="type_pj" name="type_pj">
+                                </select>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div>
+                    <button class="btn btn-success" type="submit" value="Submit">حفظ المعلومات</button>
+                    </div>
+                </div>
                 </form>           
             </div>
             <div class="modal-footer">
@@ -79,6 +132,35 @@
         </div>
         </div>
     </div>
+    <script>
+        $(".ajax-call").click(function(){
+            event.preventDefault(); // Prevent the default action of the link
+            //var a = $("#ajax-data").val();
+            var form = $(this).closest("form");
+            var a = $(this).attr('data-value');
+            console.log(a);
+            $.ajax({
+                url : form.attr("data-validate-ajax-url"),
+                type: 'POST', 
+                data : {
+                    'ajaxdata' : a
+                },
+                dataType : 'json',
+                success: function(dataajax){
+                    var select = $("#type_pj");
+                    select.empty(); // Videz les options existantes
+                    dataajax.list_pj.forEach(function(item) {
+                    select.append('<option>' + item.name + '</option>');
+                });
+                },
+                error: function(xhr, status, error) { // Error handling
+                console.log("Error: " + error);
+                console.log("Status: " + status);
+                console.dir(xhr);
+                }
+            })
+        });
+    </script>
     
     {% block content %}
     {% endblock %}

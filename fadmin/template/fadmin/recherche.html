@@ -24,21 +24,31 @@
                     <th class="th_text">رقم شكاية النيابة العامة</th> 
                     <th class="th_text">ملاحظات</th>
                     <th class="th_text">عدد مرات البحث</th>
+                    <th class="th_text">مسح</th>
+                    <th class="th_text">تعديل</th>
                 </tr>
             </thead>
             <tbody>
-              {% if data %}
-                {% for d in data %}
+              {% if data1 %}
+                {% for d in data1 %}
                 <tr>
                     <td> {{ d.id }} </td>
                     <td> {{ d.date_arr }} </td>
                     <td> {{ d.num_env }} </td>
                     <td> {{ d.num_rapp_pj }} </td>
-                    <td> {{ d.pj }} </td>
+                    <td> 
+                      {% for d2 in data3 %}
+                         {% if d.type_pj_id == d2.id %}
+                            {{ d2.name }}
+                         {% endif %}
+                      {% endfor %}
+                    </td>
                     <td> {{ d.num_rapp_pp }} </td>
                     <td> {{ d.num_plaint }} </td>
                     <td> {{ d.note }} </td>
                     <td> {{ d.search_indice }} </td>
+                    <td> <a href="{% url 'delete_item' d.id %}"><i class="fa fa-trash"></i></a></td>
+                    <td> <a href="{% url 'update_item' d.id %}"><i class="fa fa-edit"></i></a></td>
                 </tr>
                   {% endfor %}
                 {% endif %}
