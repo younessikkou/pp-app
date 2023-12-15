@@ -1,0 +1,11 @@
+
+class Type_rapp(models.Model):
+    indice = models.CharField(max_length=20, verbose_name="رمز المحضر", blank=False , null=False)
+    nom_typerapp = models.CharField(max_length=20, verbose_name="رمز المحضر", blank=False , null=False)
+
+    def __str__(self):
+        return self.nom_typerapp
+
+
+
+        type_rapp = models.ForeignKey(Type_rapp, on_delete=models.CASCADE,related_name="rapp_type",verbose_name="نوع المحضر")

@@ -84,6 +84,16 @@ body {
     color: white;
   }
   
+
+  .topnav-username {
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 22%;
+    transform: translate(-50%, -50%);
+    background-color: #04AA6D;
+    color: white;
+  }
   /* Right-aligned section inside the top navigation */
   .topnav-right {
     float: right;

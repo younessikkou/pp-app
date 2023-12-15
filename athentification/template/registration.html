@@ -1,0 +1,19 @@
+{% extends './base2/base.html' %}
+{% load static %}}
+{% block content %}
+    
+<!DOCTYPE html>
+<div class="login-page">
+    <div class="form">
+      <img src="{% static 'images/logo.png' %}" class="logo" alt="My image">
+      <form method="POST"  action="{% url 'registre' %}" >
+        {% csrf_token %} 
+        <div type="text" placeholder="name"> الاسم :{{ form.username }}</div>
+        <div type="text" placeholder="email address">{{ form.email }}</div>
+        <div type="password" placeholder="password">{{ form.password1 }}</div>
+        <div type="password" placeholder="password">{{ form.password2 }}</div>
+        <button type="submit">اضافة</button>
+    </form>
+    </div>
+  </div>
+{% endblock %}

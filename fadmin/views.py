@@ -38,7 +38,7 @@ class Fadm(APIView):
     instance = form.save(commit=False)
 
     # Modification de l'objet
-    # Par exemple, si vous voulez modifier 'type_pj' à partir de l'ID reçu via POST
+    # hna kansavi form dyal rapp bla type_pj ta nrecuperer type_pj bohdo a partir mn name hiya request.POST.get('type_pj')
     type_pj = request.POST.get('type_pj')
     if type_pj:
       try:
@@ -66,21 +66,6 @@ class Fadm(APIView):
         return render(request, 'recherche.html', context)
     return redirect('home')
 
-
-  def update_item(request, id):
-    context = {}
-    item = Fadmin.objects.get(id=id)
-    fadmin= Fadmin.objects.all()
-    typepj= Type_pj.objects.all()
-    pj= Pjs.objects.all()
-    data = {
-      'data1' : fadmin.values(),
-      'data2': list(typepj.values()),
-      'data3' : pj.values(),
-      'form' : FadminForm(instance=item)
-    }
-    print(data['data1'])
-    return render(request , 'fadmin/recherche.html' , data)
 
   
   @csrf_exempt

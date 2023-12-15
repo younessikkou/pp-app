@@ -16,13 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import Fadm
-from django.contrib.auth import views as auth_views
+from .views import Auth
 
 urlpatterns = [
-    path('',Fadm.as_view(), name='home'),
-    path('submitrapp',Fadm.submitrapp, name='submittrapp'),
-    path('delete_item/<id>',Fadm.delete_item, name='delete_item'),
-    path('ajax_pj',Fadm.ajax_pj, name='ajax_pj'),
-    path('logout',auth_views.LogoutView.as_view(), name='logout'),    
+    path('/registre',Auth.registre, name='registre'),
+    path('',Auth.login, name='login'),
 ]

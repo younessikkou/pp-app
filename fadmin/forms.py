@@ -10,4 +10,4 @@ class FadminForm(forms.ModelForm):
     # specify the name of model to use 
     class Meta: 
         model = Fadmin 
-        fields = ['num_env','num_rapp_pj','num_rapp_pp','num_plaint','note']
+        fields = ['id','num_env','num_rapp_pj','num_rapp_pp','num_plaint','note','type_rapp']

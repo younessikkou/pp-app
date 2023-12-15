@@ -17,6 +17,16 @@ class Pjs(models.Model):
     def __str__(self):
         return self.name
 
+
+class Type_rapp(models.Model):
+    indice = models.CharField(max_length=20, verbose_name="رمز المحضر", blank=False , null=False)
+    nom_typerapp = models.CharField(max_length=20, verbose_name="رمز المحضر", blank=False , null=False)
+
+    def __str__(self):
+        return self.nom_typerapp
+
+
+
 class Fadmin(models.Model):
     date_arr = models.DateField(auto_now_add=True, verbose_name="تاريخ التوصل")
     num_env = models.CharField(max_length=20, verbose_name="رقم الارسال", blank=True , null=True)
@@ -26,7 +36,8 @@ class Fadmin(models.Model):
     note = models.CharField(max_length=100, verbose_name="ملاحظات" , blank=True , null=True)
     search_indice = models.IntegerField(verbose_name="عدد مرات البحث", blank=True , null=True)
     type_pj = models.ForeignKey(Pjs, on_delete=models.CASCADE,related_name="fadmins",verbose_name="الضابطة القضائية")
-
+    type_rapp = models.ForeignKey(Type_rapp, on_delete=models.CASCADE,related_name="rapp_type",verbose_name="نوع المحضر")
 
     def __str__(self):
         return self.num_env
+
