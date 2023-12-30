@@ -19,6 +19,9 @@ from django.urls import path, include
 from .views import Auth
 
 urlpatterns = [
-    path('/registre',Auth.registre, name='registre'),
+    path('registre/',Auth.registre, name='registre'),
     path('',Auth.login, name='login'),
+    path('login/',Auth.login, name='login'),
+
 ]
+

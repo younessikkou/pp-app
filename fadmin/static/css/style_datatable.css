@@ -108,3 +108,10 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before {
 a {
   color: #32c19a;
 }
+.input-group-append {
+  cursor: pointer;
+}
+
+.filter first-child {
+  direction: rtl;
+}

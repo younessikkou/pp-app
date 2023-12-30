@@ -1,0 +1,190 @@
+{% extends '../base/base.html' %}
+
+{% block content %}
+  <!--modal filtring search-->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <!--date fadmin start picker-->
+          <div class="container">
+            <div class="row">
+              <h2 class="py-2"> <h2>
+            </div>
+            <div class="row">
+                <h3>تاريخ المحضر  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
+                <input type="text" class="datepicker date_rapp">
+            </div>
+            <br>
+            <div class="row">
+                <h3>نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+                <select name="trapp">
+                    {% for t in data0 %}
+                    <option value="{{t.nom_typerapp}}" class="type_rapp" data-value="{{ t.nom_typerapp }}">{{ t.nom_typerapp }}</option>
+                    {% endfor %}
+                </select>           
+            </div>  
+          </div>
+      </div>
+      <!---->
+      <!--date fadmin start picker-->
+      <div class="col-md-6">
+        <div class="container">
+          <div class="row">
+            <h2 class="py-2"> </h2>
+          </div>
+          <div class="row">
+              <h3>تاريخ التسجيل  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
+              <input type="text" class="datepicker date_enre">
+          </div>
+          <br> 
+          <div class="row">
+            <!--search closet-->
+            <h3>رقم المحضر :  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+              <input type="text" class="num_rapp">
+            <!-- end of search closet-->
+          </div> 
+        </div>
+      </div>
+      <!---->
+    </div>
+    
+        
+  </div> 
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <!--date fadmin start picker-->
+          <div class="container">
+            <div class="row">
+              <h2 class="py-2"> <h2>
+            </div>
+            <div class="row">
+                <h3>رقم الشكاية  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+                <input type="text" class="num_plaint">
+            </div>
+            <br>
+            <div class="row">         
+            </div>  
+          </div>
+      </div>
+      <!---->
+      <!--date fadmin start picker-->
+      <div class="col-md-6">
+        <div class="container">
+          <div class="row">
+            <h2 class="py-2"> </h2>
+          </div>
+          <div class="row">
+              <button class="btn btn-success ajax-button">بحث<i class="fa fa-search"></i></button>
+            <!-- end of search closet-->
+          </div>
+          <br> 
+          <div class="row">
+            
+          </div> 
+        </div>
+      </div>
+      <!---->
+    </div>
+    
+        
+  </div>          
+  <hr>         
+<!---->
+  <div class="main-content">
+    <div class="row">
+      <div class="col col-md-12">
+      </div>
+      <div class="col col-md-12" style=" text-align: right!important; float: right;">
+         
+      </div>
+    </div>   
+
+
+   
+<table id="files_list" class="table table-striped dt-responsive  " style="width:100%">
+            <thead class="thead_dark">
+                <tr>
+                    <th class="th_text">تاريخ التوصل</th>
+                    <th class="th_text">رقم الارسال</th>
+                    <th class="th_text">رقم المحضر</th>
+                    <th class="th_text">الضابطة القضائية</th>
+                    <th class="th_text">رمز محضر النيابة العامة</th>
+                    <th class="th_text">رقم شكاية النيابة العامة</th> 
+                    <th class="th_text">ملاحظات</th>
+                    <th class="th_text">عدد مرات البحث</th>
+                    <th class="th_text">مسح</th>
+                    <th class="th_text">تعديل</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% if data1 %}
+                {% for d in data1 %}
+                <tr id="pj">
+                    <td> {{ d.date_arr }} </td>
+                    <td> {{ d.num_env }} </td>
+                    <td> {{ d.num_rapp_pj }} </td>
+                    <td> 
+                      {% for d2 in data3 %}
+                         {% if d.type_pj_id == d2.id %}
+                            {{ d2.name }}
+                         {% endif %}
+                      {% endfor %}
+                    </td>
+                    <td> {{ d.num_rapp_pp }} </td>
+                    <td> {{ d.num_plaint }} </td>
+                    <td> {{ d.note }} </td>
+                    <td> {{ d.search_indice }} </td>
+                    <td> <a href="{% url 'delete_item' d.id %}"><i class="fa fa-trash"></i></a></td>
+                    <td> <a href="#"><i class="fa fa-edit"></i></a></td>
+                </tr>
+                  {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+  </div>
+  <div data-validate-ajax1-url="{% url 'cherch' %}"></div>
+
+
+  <script>
+    $(".ajax-button").click(function(){
+    var daterapp = $(".date_rapp").val();
+    var dateenre = $(".date_enre").val();
+    var typerapp = $(".type_rapp :selected").text();
+    var numrapp = $(".num_rapp").val();
+    var numplaint = $(".um_plaint").val();
+    var form = $(this).closest("form");
+    console.log(typerapp)
+    
+    $.ajax({
+        url : ("rech"),
+        type: 'POST', 
+        data : {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            'daterapp' : daterapp,
+            'dateenre' : dateenre,
+            'typerapp' : typerapp,
+            'numrapp' : numrapp,
+            'numplaint' : numplaint,
+        },
+        dataType : 'json',
+        success: function(dataajax){
+          var select = $("#pj");
+                    select.empty(); // Videz les options existantes
+                    dataajax.list_pj.forEach(function(item) {
+                    select.append('<td>' + item.date_arr + '</td>');
+                    select.append('<td>' + item.num_env + '</td>');
+                    select.append('<td>' + item.num_rapp_pj + '</td>');
+                    select.append('<td>' + item.date_arr + '</td>');
+                    select.append('<td>' + item.date_arr + '</td>');
+                });
+        },
+        error: function(xhr, status, error) { // Error handling
+        console.log("Error: " + error);
+        console.log("Status: " + status);
+        console.dir(xhr);
+        }
+    })
+});
+  </script>
+{% endblock %}

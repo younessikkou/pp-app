@@ -1,0 +1,150 @@
+{% extends '../base/base.html' %}
+{% block content %}
+
+<!--modal filtring search-->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <!--date fadmin start picker-->
+          <div class="container">
+            <div class="row">
+              <h2 class="py-2"> <h2>
+            </div>
+            <div class="row">
+                <h3>تاريخ البداية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
+                <input type="text" class="datepicker">
+            </div>
+            <br>
+            <div class="row">
+                <h3>نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+                <select name="trapp">
+                    {% for t in data0 %}
+                    <option value="{{t.nom_typerapp}}">{{ t.nom_typerapp }}</option>
+                    {% endfor %}
+                </select>           
+            </div>  
+          </div>
+      </div>
+      <!---->
+      <!--date fadmin start picker-->
+      <div class="col-md-6">
+        <div class="container">
+          <div class="row">
+            <h2 class="py-2"> </h2>
+          </div>
+          <div class="row">
+              <h3>تاريخ البداية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
+              <input type="text" class="datepicker">
+          </div>
+          <br> 
+          <div class="row">
+            <!--search closet-->
+            <form method="POST" data-validate-ajax-url="{% url 'cherch' %}">
+              {% csrf_token %} 
+            </form>
+            <!-- end of search closet-->
+          </div> 
+        </div>
+      </div>
+      <!---->
+    </div>
+        
+  </div>         
+  <hr>         
+<!---->
+   
+
+
+<!--Table closet-->
+<div class="container" >
+  <table class="table table-striped dt-responsive  " style="width:100%">
+        <thead class="thead_dark">
+            <tr>
+                <th class="th_text">عدد</th>
+                <th class="th_text">تاريخ التوصل</th>
+                <th class="th_text">رقم الارسال</th>
+                <th class="th_text">رقم المحضر</th>
+                <th class="th_text">الضابطة القضائية</th>
+                <th class="th_text">رمز محضر النيابة العامة</th>
+                <th class="th_text">رقم شكاية النيابة العامة</th> 
+                <th class="th_text">ملاحظات</th>
+                <th class="th_text">عدد مرات البحث</th>
+                <th class="th_text">مسح</th>
+                <th class="th_text">تعديل</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% if data1 %}
+            {% for d in data1 %}
+            <tr>
+                <td> {{ d.id }} </td>
+                <td> {{ d.date_arr }} </td>
+                <td> {{ d.num_env }} </td>
+                <td> {{ d.num_rapp_pj }} </td>
+                <td> 
+                  {% for d2 in data3 %}
+                    {% if d.type_pj_id == d2.id %}
+                        {{ d2.name }}
+                    {% endif %}
+                  {% endfor %}
+                </td>
+                <td> {{ d.num_rapp_pp }} </td>
+                <td> {{ d.num_plaint }} </td>
+                <td> {{ d.note }} </td>
+                <td> {{ d.search_indice }} </td>
+                <td> <a href="{% url 'delete_item' d.id %}"><i class="fa fa-trash"></i></a></td>
+                <td> <a href="#"><i class="fa fa-edit"></i></a></td>
+            </tr>
+              {% endfor %}
+            {% endif %}
+        </tbody>
+  </table>
+  <!--paginator-->
+<nav aria-label="...">
+  <ul class="pagination" style="margin-right: 700px;">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">السابق</a>
+    </li>
+    {% endif %}
+    {% for p in page_obj.paginator %}
+    <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">التالي</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+<!---->s
+</div>
+<!--Table closet-->
+
+
+
+<script>
+  $(".ajax-call").keyup(function(){
+      console.log("hi")
+      var a = $(this).attr('data-value');
+      var form = $(this).closest("form");
+      console.log(a);
+      $.ajax({
+          url : form.attr("data-validate-ajax-url"),
+          type: 'POST', 
+          data : {
+            'ajaxdata' : a
+          },
+          dataType : 'json',
+          success: function(dataajax){
+              console.log(dataajax.searching)
+          },
+          error: function(xhr, status, error) { // Error handling
+          console.log("Error: " + error);
+          console.log("Status: " + status);
+          console.dir(xhr);
+          }
+      })
+  });
+</script>
+{% endblock %}

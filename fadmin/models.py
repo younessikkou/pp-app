@@ -6,12 +6,12 @@ class Type_pj(models.Model):
     name_pj = models.CharField(max_length=30)
 
     def __str__(self):
-        return f"{self.name_pj}"
+        return self.name_pj
 
 
 class Pjs(models.Model):
-    indice = models.CharField(max_length=3)
-    name = models.CharField(max_length=100)
+    indice = models.CharField(max_length=3,unique=True)
+    name = models.CharField(max_length=100,unique=True)
     reporter = models.ForeignKey(Type_pj, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -19,7 +19,7 @@ class Pjs(models.Model):
 
 
 class Type_rapp(models.Model):
-    indice = models.CharField(max_length=20, verbose_name="رمز المحضر", blank=False , null=False)
+    indice = models.CharField(max_length=20, verbose_name="رمز المحضر", blank=False , null=False,unique=True)
     nom_typerapp = models.CharField(max_length=20, verbose_name="رمز المحضر", blank=False , null=False)
 
     def __str__(self):

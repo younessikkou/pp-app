@@ -20,9 +20,12 @@ from .views import Fadm
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('',Fadm.as_view(), name='home'),
+    path('',Fadm.get, name='home'),
     path('submitrapp',Fadm.submitrapp, name='submittrapp'),
     path('delete_item/<id>',Fadm.delete_item, name='delete_item'),
     path('ajax_pj',Fadm.ajax_pj, name='ajax_pj'),
-    path('logout',auth_views.LogoutView.as_view(), name='logout'),    
+    path('rech',Fadm.rappsearch, name='cherch'),
+    path('searching',Fadm.ajax_search, name='chercher'),
+    path('logout',auth_views.LogoutView.as_view(), name='logout'),
+    path('recherche',Fadm.recherche, name='recherche'),    
 ]

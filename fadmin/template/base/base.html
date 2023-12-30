@@ -25,6 +25,8 @@
  <link rel="stylesheet" href="{% static '/css/style_datatable.css' %}">
  <link rel="stylesheet" href="{% static '/css/css.css' %}">
  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
 </head> 
   
 <body> 
@@ -34,6 +36,10 @@
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
     <script src="{% static '/js/js_datatable.js' %}"></script>
+    <script src="{% static '/js/js.js' %}"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
   
     <!-- Creating a navigation bar using the
          .navbar class of bootstrap -->
@@ -50,7 +56,7 @@
                 <a href="{% url 'home' %}">  البحث عن محضر </a>
               </div>
               <div class="navbar">
-                <a href="{% url 'home' %}"> تحميل السجل </a>
+                <a href="{% url 'recherche' %}"> تحميل السجل </a>
               </div>
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 مرحبا {{ user.username }} 
@@ -84,11 +90,8 @@
                 <div class="container">
                     {% csrf_token %} 
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12">
                             {{ form.num_env|as_crispy_field }}
-                        </div>
-                        <div class="col-6">
-                            {{ form.num_rapp_pj|as_crispy_field }}
                         </div>
                     </div>
                     <div class="row">
@@ -96,7 +99,7 @@
                             {{ form.num_rapp_pp|as_crispy_field }}
                         </div>
                         <div class="col-6">
-                            {{ form.num_rapp_pp|as_crispy_field }}
+                            {{ form.num_rapp_pj|as_crispy_field }}
                         </div>
                     </div>
                     <div class="row">
@@ -179,6 +182,11 @@
                 console.dir(xhr);
                 }
             })
+        });
+    </script>
+    <script>
+        $(function(){
+          $('.datepicker').datepicker();
         });
     </script>
     
