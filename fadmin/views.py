@@ -156,24 +156,32 @@ class Fadm(APIView):
     numplaint = request.POST.get("numplaint")
     typerapp = request.POST.get("typerapp")
     rapp = Type_rapp.objects.all()
+    vide= Fadmin.objects.filter(num_rapp_pp__contains='vide')
     typerapp_id = 0
+    dataajax={}
     for i in rapp:
       if(i.nom_typerapp==typerapp):
         typerapp_id = i.id
-    print(typerapp_id)
-    dataajax={}
     if(typesearch == "numrapp"):
       print(numrapp)
       fadmin= Fadmin.objects.filter(num_rapp_pp__contains=numrapp) & Fadmin.objects.filter(type_rapp_id=typerapp_id)
       print("-------------"+numrapp)
-      dataajax["item"] =list(fadmin.values())
+      if fadmin:
+        dataajax["item"] =list(fadmin.values())
+      else:
+        dataajax["item"] =list(vide.values())
       print(dataajax)
     elif(typesearch == "numplaint"):
       print(numplaint)
       fadmin= Fadmin.objects.filter(num_plaint__contains=numplaint) & Fadmin.objects.filter(type_rapp=typerapp_id)
       print("-------------"+numplaint)
-      dataajax["item"] =list(fadmin.values())
+      if fadmin:
+        dataajax["item"] =list(fadmin.values())
+      else:
+        dataajax["item"] =list(vide.values())
       print(dataajax)
     return JsonResponse(dataajax)
+    
+    
 
 

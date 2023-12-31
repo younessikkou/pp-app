@@ -1,23 +1,25 @@
 {% extends '../base/base.html' %}
+{% load static %}
 
 {% block content %}
   <!--modal filtring search-->
+  <div class="container" style="padding:50px">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
         <!--date fadmin start picker-->
-          <div class="container">
+          <div class="container-fluid">
             <div class="row">
               <h2 class="py-2"> <h2>
             </div>
             <div class="row">
-                <h3>تاريخ المحضر  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
-                <input type="text" class="datepicker date_rapp">
+                <h3 class="droid-arabic-kufi">تاريخ المحضر  <i class="fa fa-calendar" style="font-size:24px color:green;"></i>:</h3>
+                <input type="text" class="form-control datepicker date_rapp">
             </div>
             <br>
             <div class="row">
-                <h3>نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
-                <select name="trapp" class="type_rapp">
+                <h3 class="droid-arabic-kufi">نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+                <select name="trapp" class="form-control type_rapp">
                     {% for t in data0 %}
                     <option value="{{t.nom_typerapp}}" data-value="{{ t.nom_typerapp }}">{{ t.nom_typerapp }}</option>
                     {% endfor %}
@@ -33,24 +35,24 @@
             <h2 class="py-2"> </h2>
           </div>
           <div class="row">
-            <h3>رقم الشكاية  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
-            <input type="text" class="num_plaint ajax-plaint">
+            <h3 class="droid-arabic-kufi">رقم الشكاية  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+            <input type="text" class="form-control num_plaint ajax-plaint form-text">
           </div>
           <br> 
           <div class="row">
             <!--search closet-->
-            <h3>رقم محضر النيابة العامة:  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
-              <input type="text" class="num_rapp ajax-rapp">
+            <h3 class="droid-arabic-kufi">رقم محضر النيابة العامة:  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+              <input type="text" class="form-control num_rapp ajax-rapp form-text">
             <!-- end of search closet-->
           </div> 
         </div>
       </div>
       <!---->
-    </div>
-    
-        
-  </div>          
-  <hr>         
+    </div>  
+  </div>
+</div>         
+<hr>  
+
 <!---->
   <div class="main-content">
     <div class="row">
@@ -63,15 +65,15 @@
 
 
    
-<table id="files_list" class="table table-striped dt-responsive  " style="width:100%">
+<table id="files_list" class="table table-striped dt-responsive" style="width:100%">
             <thead class="thead_dark">
                 <tr>
-                    <th class="th_text">تاريخ التوصل</th>
-                    <th class="th_text">رقم الارسال</th>
-                    <th class="th_text">رقم المحضر الضابطة القضائية</th>
-                    <th class="th_text">رقم محضر النيابة العامة</th>
-                    <th class="th_text">رقم شكاية النيابة العامة</th> 
-                    <th class="th_text">ملاحظات</th>
+                    <th class="th_text droid-arabic-kufi">تاريخ التوصل</th>
+                    <th class="th_text droid-arabic-kufi">رقم الارسال</th>
+                    <th class="th_text droid-arabic-kufi">رقم المحضر الضابطة القضائية</th>
+                    <th class="th_text droid-arabic-kufi">رقم محضر النيابة العامة</th>
+                    <th class="th_text droid-arabic-kufi">رقم شكاية النيابة العامة</th> 
+                    <th class="th_text droid-arabic-kufi">ملاحظات</th>
                 </tr>
             </thead>
             <tbody id="pj">

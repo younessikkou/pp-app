@@ -1,11 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Tajawal);
 
-body{
-  direction : rtl;
- background: #dcffe2!important;
- font-family:'tajawal'!important;
-}
-
 .logo {
   width : 80px;
   height : 80px;
@@ -17,10 +11,8 @@ h1{
 .main-content{
   width:100%!important;
   padding-left:150px!important;
-    padding-right:150px!important;
-    background: #dcffe2!important;
-
-  background: white;
+  padding-right:150px!important;
+  background-image: url("images/background.jpg") no-repat;
   padding-top:100px;
 }
 .thead_dark {
@@ -106,7 +98,9 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before {
 }
 
 a {
-  color: #32c19a;
+  color: grey;
+  font-size:15px;
+  font-weight: bold;
 }
 .input-group-append {
   cursor: pointer;
@@ -115,3 +109,20 @@ a {
 .filter first-child {
   direction: rtl;
 }
+
+*{
+  direction:rtl;
+  color:#444;
+}
+
+h6{
+  color:#42c2a1;
+  padding:5px;
+}
+
+.amiri{font-family: 'Amiri', serif;}
+.droid-arabic-kufi{font-family: 'Droid Arabic Kufi', serif;}
+.droid-arabic-naskh{font-family: 'Droid Arabic Naskh', serif;}
+.lateef{font-family: 'Lateef', serif;}
+.scheherazade{font-family: 'Scheherazade', serif;}
+.thabit{font-family: 'Thabit', serif;}

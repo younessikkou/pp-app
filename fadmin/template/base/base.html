@@ -26,10 +26,31 @@
  <link rel="stylesheet" href="{% static '/css/css.css' %}">
  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+ <style>
+    body {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.6;
+  background: url("{% static 'images/background.png'%}") no-repeat center center fixed;
+  -webkit-background-size:cover;
+  -moz--background-size:cover;
+  -o--background-size:cover;
+  background-size:auto;
+  background-color: rgba(231,172,70,0.1);
+  }
+    nav {
+    background: url("{% static 'images/nav2.png'%}") no-repeat center center fixed;
+    -webkit-background-size:cover;
+    -moz--background-size:cover;
+    -o--background-size:cover;
+    background-size: cover;
+    background-color: white;
+    }
+ </style>
 
 </head> 
+
   
-<body> 
+<body class="body">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
@@ -44,24 +65,24 @@
     <!-- Creating a navigation bar using the
          .navbar class of bootstrap -->
 
-         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
                <div class="topnav-right">
                  <img src="{% static 'images/logo.png' %}" class="logo" alt="My image" style="margin-right:50px;">
                </div>
               <div class="navbar" data-toggle="modal" data-target="#exampleModal">
-                <a href="#" class="active"> اضافة محضر </a>
+                <a href="#" class="active"><i class="fa fa-plus"></i> اضافة محضر </a>
               </div>
               <div class="navbar">
-                <a href="{% url 'home' %}">  البحث عن محضر </a>
+                <a href="{% url 'home' %}"><i class="fa fa-search"></i> البحث عن محضر </a>
               </div>
               <div class="navbar">
-                <a href="{% url 'recherche' %}"> تحميل السجل </a>
+                <a href="{% url 'recherche' %}"><i class="fa fa-save"></i> تحميل السجل </a>
               </div>
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 550px;">
                 مرحبا {{ user.username }} 
-                </button>
-              <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDarkDropdown" >
                 <div class="dropdown">
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" data-value="">الملف الشخصي</a>
