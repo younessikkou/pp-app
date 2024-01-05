@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Fadmin, Type_pj , Pjs, Type_rapp
-from django.http import JsonResponse
 from django.core.paginator import Paginator
 from .forms import FadminForm
 from django.views.decorators.csrf import csrf_exempt
@@ -11,6 +10,13 @@ from django.core.paginator import Paginator
 from django.views.generic import ListView
 from datetime import date, timedelta
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
+import json
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse, JsonResponse
+from django.core.serializers.json import DjangoJSONEncoder
+from io import BytesIO
+
 
 
 
@@ -40,8 +46,8 @@ class Fadm(APIView):
       return redirect('login')
 
   def recherche(request):
-    startdate = date.today()
-    enddate = startdate - timedelta(days=3)
+    startdate = request.POST.get("datedebut")
+    enddate = request.POST.get("datefin")
     fadmin= Fadmin.objects.filter(date_arr__range=[enddate, startdate])
     typepj= Type_pj.objects.all()
     typerapp= Type_rapp.objects.all()
@@ -62,6 +68,44 @@ class Fadm(APIView):
       "page_obj":page_obj
     }
     return render(request , 'fadmin/recherche2.html' , data)
+  
+  def ajax_rapport(request):
+    startdate = request.POST.get("datedebut")
+    enddate = request.POST.get("datefin")
+    fadmin= Fadmin.objects.filter(date_arr__range=[startdate,enddate])
+    dataajax={}
+    dataajax["item"] =list(fadmin.values())
+    print(dataajax)
+    return JsonResponse(dataajax)
+  
+  def ajax_pdf(request):
+    startdate = request.POST.get("datedebut")
+    enddate = request.POST.get("datefin")
+    fadmin = Fadmin.objects.filter(date_arr__range=[startdate, enddate])
+
+    # Convertir les données en format JSON
+    json_data = json.dumps(list(fadmin.values()), indent=2, cls=DjangoJSONEncoder)
+
+    # Créer un objet BytesIO pour stocker le contenu PDF
+    pdf_buffer = BytesIO()
+
+    # Créer le document PDF en utilisant ReportLab
+    p = canvas.Canvas(pdf_buffer)
+    p.drawString(100, 800, "Données au format JSON :")
+    p.drawString(100, 780, json_data)
+    p.save()
+
+    # Réinitialiser la position de lecture du buffer PDF à 0
+    pdf_buffer.seek(0)
+
+    # Créer un objet HttpResponse avec le type de contenu PDF
+    pdf_response = HttpResponse(pdf_buffer.read(), content_type='application/pdf')
+    pdf_response['Content-Disposition'] = 'inline; filename="rapport.pdf"'
+
+    # Retourner la réponse JSON avec les données JSON
+    return JsonResponse({'pdf_data': '', 'json_data': json_data})
+
+
 
   def submitrapp(request):
     # dictionary for initial data with 

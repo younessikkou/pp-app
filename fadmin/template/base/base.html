@@ -24,19 +24,19 @@
  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet"> </link>
  <link rel="stylesheet" href="{% static '/css/style_datatable.css' %}">
  <link rel="stylesheet" href="{% static '/css/css.css' %}">
- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+ <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
  <style>
     body {
-  font-family: "Open Sans", sans-serif;
-  line-height: 1.6;
-  background: url("{% static 'images/background.png'%}") no-repeat center center fixed;
-  -webkit-background-size:cover;
-  -moz--background-size:cover;
-  -o--background-size:cover;
-  background-size:auto;
-  background-color: rgba(231,172,70,0.1);
-  }
+    font-family: 'Cairo' !important;
+    line-height: 1.6;
+    background: url("{% static 'images/background.png'%}") no-repeat center center fixed;
+    -webkit-background-size:cover;
+    -moz--background-size:cover;
+    -o--background-size:cover;
+    background-size:auto;
+    background-color: rgba(231,172,70,0.1);
+    }
     nav {
     background: url("{% static 'images/nav2.png'%}") no-repeat center center fixed;
     -webkit-background-size:cover;
@@ -44,6 +44,14 @@
     -o--background-size:cover;
     background-size: cover;
     background-color: white;
+    }
+
+    .arabicfont{
+        font-size: 14px;
+        font-family: 'Cairo' !important;
+        color: #000000;
+        font-weight: bold;
+        text-transform: uppercase;
     }
  </style>
 
@@ -71,13 +79,13 @@
                  <img src="{% static 'images/logo.png' %}" class="logo" alt="My image" style="margin-right:50px;">
                </div>
               <div class="navbar" data-toggle="modal" data-target="#exampleModal">
-                <a href="#" class="active"><i class="fa fa-plus"></i> اضافة محضر </a>
+                <a href="#" class="active" class="arabicfont"><i class="fa fa-plus"></i> اضافة محضر </a>
               </div>
               <div class="navbar">
-                <a href="{% url 'home' %}"><i class="fa fa-search"></i> البحث عن محضر </a>
+                <a href="{% url 'home' %}" class="arabicfont"><i class="fa fa-search"></i> البحث عن محضر </a>
               </div>
               <div class="navbar">
-                <a href="{% url 'recherche' %}"><i class="fa fa-save"></i> تحميل السجل </a>
+                <a href="{% url 'recherche' %}" class="arabicfont"><i class="fa fa-save"></i> تحميل السجل </a>
               </div>
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 550px;">
                 مرحبا {{ user.username }} 
@@ -85,9 +93,9 @@
               <div class="collapse navbar-collapse" id="navbarNavDarkDropdown" >
                 <div class="dropdown">
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" data-value="">الملف الشخصي</a>
-                    <a class="dropdown-item" href="#" data-value="">الاعدادات</a>
-                    <a class="dropdown-item" href="{% url 'logout' %}" data-value="">تسجيل الخروج</a>
+                    <a class="dropdown-item arabicfont" href="#" data-value="">الملف الشخصي</a>
+                    <a class="dropdown-item arabicfont" href="#" data-value="">الاعدادات</a>
+                    <a class="dropdown-item arabicfont" href="{% url 'logout' %}" data-value="">تسجيل الخروج</a>
                     </div>
                 </div>
               </div>
@@ -101,7 +109,7 @@
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">اضافة محضر</h5>
+            <h5 class="modal-title arabicfont" id="exampleModalLabel">اضافة محضر</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -138,7 +146,7 @@
                                 <h6 class="pj-name">صنف الضابطة القضائية</h6>
                                 <div class="dropdown">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    البحث
+                                    <span class="arabicfont">البحث</span>
                                     </button>
                                     {% if data2 %}
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -162,13 +170,13 @@
                         </div>
                     </div>
                     <div>
-                    <button class="btn btn-success" type="submit" value="Submit">حفظ المعلومات</button>
+                    <button class="btn btn-success arabicfont" type="submit" value="Submit">حفظ المعلومات</button>
                     </div>
                 </div>
                 </form>           
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            <button type="button" class="btn btn-secondary arabicfont data-dismiss="modal">اغلاق</button>
             </div>
         </div>
         </div>

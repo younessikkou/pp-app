@@ -14,12 +14,12 @@
             </div>
             <div class="row">
                 <h3>تاريخ البداية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
-                <input type="text" class="datepicker">
+                <input type="text" class="datedebut">
             </div>
             <br>
             <div class="row">
                 <h3>نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
-                <select name="trapp">
+                <select name="typerapp">
                     {% for t in data0 %}
                     <option value="{{t.nom_typerapp}}">{{ t.nom_typerapp }}</option>
                     {% endfor %}
@@ -35,20 +35,25 @@
             <h2 class="py-2"> </h2>
           </div>
           <div class="row">
-              <h3>تاريخ البداية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
-              <input type="text" class="datepicker">
+              <h3>تاريخ النهاية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
+              <input type="text" class="datefin">
           </div>
           <br> 
           <div class="row">
             <!--search closet-->
-            <form method="POST" data-validate-ajax-url="{% url 'cherch' %}">
-              {% csrf_token %} 
-            </form>
+            <div>
+              <button class="btn btn-success ajax-call">البحث عن الملفات <i class="fa fa-search"></i></button>
+            </div>
             <!-- end of search closet-->
           </div> 
         </div>
       </div>
       <!---->
+      <div class="row">
+        <div class="col-md">
+          <button class="btn btn-danger pdfbutton">Download Pdf</button>
+        </div>
+      </div>
     </div>
         
   </div>         
@@ -58,49 +63,30 @@
 
 
 <!--Table closet-->
-<div class="container" >
-  <table class="table table-striped dt-responsive  " style="width:100%">
-        <thead class="thead_dark">
-            <tr>
-                <th class="th_text">عدد</th>
-                <th class="th_text">تاريخ التوصل</th>
-                <th class="th_text">رقم الارسال</th>
-                <th class="th_text">رقم المحضر</th>
-                <th class="th_text">الضابطة القضائية</th>
-                <th class="th_text">رمز محضر النيابة العامة</th>
-                <th class="th_text">رقم شكاية النيابة العامة</th> 
-                <th class="th_text">ملاحظات</th>
-                <th class="th_text">عدد مرات البحث</th>
-                <th class="th_text">مسح</th>
-                <th class="th_text">تعديل</th>
-            </tr>
-        </thead>
-        <tbody>
-          {% if data1 %}
-            {% for d in data1 %}
-            <tr>
-                <td> {{ d.id }} </td>
-                <td> {{ d.date_arr }} </td>
-                <td> {{ d.num_env }} </td>
-                <td> {{ d.num_rapp_pj }} </td>
-                <td> 
-                  {% for d2 in data3 %}
-                    {% if d.type_pj_id == d2.id %}
-                        {{ d2.name }}
-                    {% endif %}
-                  {% endfor %}
-                </td>
-                <td> {{ d.num_rapp_pp }} </td>
-                <td> {{ d.num_plaint }} </td>
-                <td> {{ d.note }} </td>
-                <td> {{ d.search_indice }} </td>
-                <td> <a href="{% url 'delete_item' d.id %}"><i class="fa fa-trash"></i></a></td>
-                <td> <a href="#"><i class="fa fa-edit"></i></a></td>
-            </tr>
-              {% endfor %}
-            {% endif %}
-        </tbody>
+<div class="container" id="PDFcontent">
+  <table class="table table-striped dt-responsive" style="width:100%">
+    <thead class="thead_dark">
+        <tr>
+            <th class="th_text arabicfont">تاريخ التوصل</th>
+            <th class="th_text arabicfont">رقم الارسال</th>
+            <th class="th_text arabicfont">رقم المحضر الضابطة القضائية</th>
+            <th class="th_text arabicfont">رقم محضر النيابة العامة</th>
+            <th class="th_text arabicfont">رقم شكاية النيابة العامة</th> 
+            <th class="th_text arabicfont">ملاحظات</th>
+        </tr>
+    </thead>
+    <tbody id="trapp">
+        <tr>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+    </tbody>
   </table>
+</div>
   <!--paginator-->
 <nav aria-label="...">
   <ul class="pagination" style="margin-right: 700px;">
@@ -119,28 +105,71 @@
     {% endif %}
   </ul>
 </nav>
-<!---->s
+<!---->
 </div>
 <!--Table closet-->
 
-
-
 <script>
-  $(".ajax-call").keyup(function(){
-      console.log("hi")
-      var a = $(this).attr('data-value');
+  $(".pdfbutton").click(function(){
+      var datedebut = $(".datedebut").val();
+      var datefin = $(".datefin").val();
+      var typerapp = $(".type_rapp option:selected").val();
       var form = $(this).closest("form");
-      console.log(a);
+      console.log(datedebut+"--"+datefin)
       $.ajax({
-          url : form.attr("data-validate-ajax-url"),
+          url : ("pdfrapp"),
           type: 'POST', 
           data : {
-            'ajaxdata' : a
+             csrfmiddlewaretoken: '{{ csrf_token }}',
+            'datedebut' : datedebut,
+            'datefin' : datefin,
+            'typerapp' : typerapp
+          },
+          dataType : 'json',
+          success: function(response){ 
+            console.log(response)           
+            },
+          error: function(xhr, status, error) { // Error handling
+          console.log("Error: " + error);
+          console.log("Status: " + status);
+          console.dir(xhr);
+          }
+      })
+  });
+</script>
+
+<script>
+  $(".ajax-call").click(function(){
+      var datedebut = $(".datedebut").val();
+      var datefin = $(".datefin").val();
+      var typerapp = $(".type_rapp option:selected").val();
+      var form = $(this).closest("form");
+      console.log(datedebut+"--"+datefin)
+      $.ajax({
+          url : ("rechercherapp"),
+          type: 'POST', 
+          data : {
+             csrfmiddlewaretoken: '{{ csrf_token }}',
+            'datedebut' : datedebut,
+            'datefin' : datefin,
+            'typerapp' : typerapp
           },
           dataType : 'json',
           success: function(dataajax){
-              console.log(dataajax.searching)
-          },
+              console.log(dataajax.item)
+              var select = $("#trapp");
+                        select.empty(); // Videz les options existantes
+                        dataajax.item.forEach(function(item) {
+                        select.append('<tr>');
+                        select.append('<td>' + item.date_arr + '</td>');
+                        select.append('<td>' + item.num_env + '</td>');
+                        select.append('<td>' + item.num_rapp_pj + '</td>');
+                        select.append('<td>' + item.num_rapp_pp + '</td>');
+                        select.append('<td>' + item.num_plaint + '</td>');
+                        select.append('<td>' + item.note + '</td>');
+                        select.append('</tr>');                  
+                    });            
+            },
           error: function(xhr, status, error) { // Error handling
           console.log("Error: " + error);
           console.log("Status: " + status);

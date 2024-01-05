@@ -110,4 +110,31 @@
     }
   } 
 
+  body {
+    font-family: 'Cairo' !important;
+    line-height: 1.6;
+    background: url("{% static 'images/background.png'%}") no-repeat center center fixed;
+    -webkit-background-size:cover;
+    -moz--background-size:cover;
+    -o--background-size:cover;
+    background-size:auto;
+    background-color: rgba(231,172,70,0.1);
+    }
+    nav {
+    background: url("{% static 'images/nav2.png'%}") no-repeat center center fixed;
+    -webkit-background-size:cover;
+    -moz--background-size:cover;
+    -o--background-size:cover;
+    background-size: cover;
+    background-color: white;
+    }
+
+    a{
+        font-size: 14px;
+        font-family: 'Cairo' !important;
+        color: #000000;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
  
