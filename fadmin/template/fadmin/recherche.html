@@ -1,67 +1,57 @@
 {% extends '../base/base.html' %}
 {% load static %}
 
+
+
+
 {% block content %}
-  <!--modal filtring search-->
-  <div class="container" style="padding:50px">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <!--date fadmin start picker-->
-          <div class="container-fluid">
-            <div class="row">
-              <h2 class="py-2"> <h2>
-            </div>
-            <div class="row">
-                <h3 class="arabicfont">تاريخ المحضر  <i class="fa fa-calendar" style="font-size:24px color:green;"></i>:</h3>
-                <input type="text" class="form-control datepicker date_rapp">
-            </div>
-            <br>
-            <div class="row">
-                <h3 class="arabicfont">نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
-                <select name="trapp" class="form-control type_rapp">
-                    {% for t in data0 %}
-                    <option value="{{t.nom_typerapp}}" data-value="{{ t.nom_typerapp }}">{{ t.nom_typerapp }}</option>
-                    {% endfor %}
-                </select>           
-            </div>  
+<!--panel group testing-->
+<div class="container">
+  <br style="color:green;">
+  <div class="panel-header" >
+  <h2 style=" text-align: center; font-size: 35px; font-family: 'Cairo' !important; color: #000000; font-weight: bold; text-transform: uppercase;">البحث عن المحاضر و الشكايات</h2><br>
+  </div>
+  <div class="panel-group" style=" text-align: right;">
+    <div class="panel">
+      <div class="row">     
+        <div class="col-md">
+          <div class="panel-body">
+            <h3 class="arabicfont">نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+            <select name="trapp" class="form-control type_rapp">
+                {% for t in data0 %}
+                <option value="{{t.nom_typerapp}}" data-value="{{ t.nom_typerapp }}">{{ t.nom_typerapp }}</option>
+                {% endfor %}
+            </select>           
           </div>
+        </div>
+        <div class="col-md">
+          <div class="panel-body">
+            <h3 class="arabicfont">رقم محضر النيابة العامة:  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+            <input type="text" class="form-control num_rapp ajax-rapp form-text">
+          </div>
+        </div>
       </div>
-      <!---->
-      <!--date fadmin start picker-->
-      <div class="col-md-6">
-        <div class="container">
-          <div class="row">
-            <h2 class="py-2"> </h2>
-          </div>
-          <div class="row">
+      <hr>
+      <div class="row">     
+        <div class="col-md">
+          <div class="panel-body">
             <h3 class="arabicfont">رقم الشكاية  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
             <input type="text" class="form-control num_plaint ajax-plaint form-text">
           </div>
-          <br> 
-          <div class="row">
-            <!--search closet-->
-            <h3 class="arabicfont">رقم محضر النيابة العامة:  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
-              <input type="text" class="form-control num_rapp ajax-rapp form-text">
-            <!-- end of search closet-->
-          </div> 
         </div>
-      </div>
-      <!---->
-    </div>  
+        <div class="col-md">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h3 class="arabicfont">رقم محضر النيابة الضابطة القضائية  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+              <input type="text" class="form-control num_rapp ajax-rapp form-text">
+            </div>
+          </div>
+        </div>
+    </div>
+    <hr>
   </div>
-</div>         
-<hr>  
-
-<!---->
-  <div class="main-content">
-    <div class="row">
-      <div class="col col-md-12">
-      </div>
-      <div class="col col-md-12" style=" text-align: right!important; float: right;">
-         
-      </div>
-    </div>   
+</div>
+<!--end panel group-->
 
 
    
@@ -111,11 +101,15 @@
                 'typesearch' : "numplaint",
             },
             dataType : 'json',
-            success: function(dataajax){
+            success: function(dataajax) {
               console.log(dataajax.item)
               var select = $("#pj");
-                        select.empty(); // Videz les options existantes
-                        dataajax.item.forEach(function(item) {
+              console.log(numplaint)
+              // Clear existing content in the table
+              select.empty();
+              if (numplaint){
+                if (dataajax.item) {
+                    dataajax.item.forEach(function(item) {
                         select.append('<tr>');
                         select.append('<td>' + item.date_arr + '</td>');
                         select.append('<td>' + item.num_env + '</td>');
@@ -123,9 +117,30 @@
                         select.append('<td>' + item.num_rapp_pp + '</td>');
                         select.append('<td>' + item.num_plaint + '</td>');
                         select.append('<td>' + item.note + '</td>');
-                        select.append('</tr>');                  
+                        select.append('</tr>');
                     });
-                    
+                } else {
+                    // Add an empty row if there is no data
+                    select.append('<tr>');
+                    select.append('<td>' + " " + '</td>');
+                    select.append('<td>' + " " + '</td>');
+                    select.append('<td>' + " " + '</td>');
+                    select.append('<td>' + " " + '</td>');
+                    select.append('<td>' + " " + '</td>');
+                    select.append('<td>' + " " + '</td>');
+                    select.append('</tr>');
+                }
+            }else{
+              // Add an empty row if there is no data
+              select.append('<tr>');
+                select.append('<td>' + " " + '</td>');
+                select.append('<td>' + " " + '</td>');
+                select.append('<td>' + " " + '</td>');
+                select.append('<td>' + " " + '</td>');
+                select.append('<td>' + " " + '</td>');
+                select.append('<td>' + " " + '</td>');
+                select.append('</tr>');
+            }
             },
             error: function(xhr, status, error) { // Error handling
             console.log("Error: " + error);
@@ -135,49 +150,74 @@
         })
     });
 </script>
-  <script>
-    $(".ajax-rapp").change(function(){
-    var daterapp = $(".date_rapp").val();
-    var dateenre = $(".date_enre").val();
-    var typerapp = $(".type_rapp :selected").text();
-    var numrapp = $(".num_rapp").val();
-    var numplaint = $(".num_plaint").val();
-    var form = $(this).closest("form");    
-    $.ajax({
-        url : ("rech"),
-        type: 'POST', 
-        data : {
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            'daterapp' : daterapp,
-            'dateenre' : dateenre,
-            'typerapp' : typerapp,
-            'numrapp' : numrapp,
-            'numplaint' : numplaint,
-            'typesearch' : "numrapp",
-        },
-        dataType : 'json',
-        success: function(dataajax){
-          console.log(dataajax.item)
-          var select = $("#pj");
-                    select.empty(); // Videz les options existantes
-                    dataajax.item.forEach(function(item) {
-                    select.append('<tr>');
-                    select.append('<td>' + item.date_arr + '</td>');
-                    select.append('<td>' + item.num_env + '</td>');
-                    select.append('<td>' + item.num_rapp_pj + '</td>');
-                    select.append('<td>' + item.num_rapp_pp + '</td>');
-                    select.append('<td>' + item.num_plaint + '</td>');
-                    select.append('<td>' + item.note + '</td>');
-                    select.append('</tr>');                  
-                });
-                
-        },
-        error: function(xhr, status, error) { // Error handling
-        console.log("Error: " + error);
-        console.log("Status: " + status);
-        console.dir(xhr);
-        }
-    })
+<script>
+  $(".ajax-rapp").keyup(function(){
+  var daterapp = $(".date_rapp").val();
+  var dateenre = $(".date_enre").val();
+  var typerapp = $(".type_rapp :selected").text();
+  var numrapp = $(".num_rapp").val();
+  var numplaint = $(".num_plaint").val();
+  var form = $(this).closest("form");    
+  $.ajax({
+      url : ("rech"),
+      type: 'POST', 
+      data : {
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          'daterapp' : daterapp,
+          'dateenre' : dateenre,
+          'typerapp' : typerapp,
+          'numrapp' : numrapp,
+          'numplaint' : numplaint,
+          'typesearch' : "numrapp",
+      },
+      dataType : 'json',
+      success: function(dataajax) {
+        console.log(dataajax.item)
+        var select = $("#pj");
+        console.log(numrapp)
+        // Clear existing content in the table
+        select.empty();
+        if (numrapp){
+          if (dataajax.item) {
+              dataajax.item.forEach(function(item) {
+                  select.append('<tr>');
+                  select.append('<td>' + item.date_arr + '</td>');
+                  select.append('<td>' + item.num_env + '</td>');
+                  select.append('<td>' + item.num_rapp_pj + '</td>');
+                  select.append('<td>' + item.num_rapp_pp + '</td>');
+                  select.append('<td>' + item.num_plaint + '</td>');
+                  select.append('<td>' + item.note + '</td>');
+                  select.append('</tr>');
+              });
+          } else {
+              // Add an empty row if there is no data
+              select.append('<tr>');
+              select.append('<td>' + " " + '</td>');
+              select.append('<td>' + " " + '</td>');
+              select.append('<td>' + " " + '</td>');
+              select.append('<td>' + " " + '</td>');
+              select.append('<td>' + " " + '</td>');
+              select.append('<td>' + " " + '</td>');
+              select.append('</tr>');
+          }
+      }else{
+        // Add an empty row if there is no data
+        select.append('<tr>');
+          select.append('<td>' + " " + '</td>');
+          select.append('<td>' + " " + '</td>');
+          select.append('<td>' + " " + '</td>');
+          select.append('<td>' + " " + '</td>');
+          select.append('<td>' + " " + '</td>');
+          select.append('<td>' + " " + '</td>');
+          select.append('</tr>');
+      }
+      },
+      error: function(xhr, status, error) { // Error handling
+      console.log("Error: " + error);
+      console.log("Status: " + status);
+      console.dir(xhr);
+      }
+  })
 });
 </script>
 

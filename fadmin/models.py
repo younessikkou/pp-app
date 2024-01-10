@@ -10,7 +10,7 @@ class Type_pj(models.Model):
 
 
 class Pjs(models.Model):
-    indice = models.CharField(max_length=3,unique=True)
+    indice = models.CharField(max_length=3)
     name = models.CharField(max_length=100,unique=True)
     reporter = models.ForeignKey(Type_pj, on_delete=models.CASCADE)
 

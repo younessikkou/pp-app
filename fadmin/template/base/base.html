@@ -87,9 +87,9 @@
               <div class="navbar">
                 <a href="{% url 'recherche' %}" class="arabicfont"><i class="fa fa-save"></i> تحميل السجل </a>
               </div>
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 550px;">
+              <div class="btn btn-success dropdown-toggle navbar-left"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 مرحبا {{ user.username }} 
-              </button>
+              </div>
               <div class="collapse navbar-collapse" id="navbarNavDarkDropdown" >
                 <div class="dropdown">
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -176,7 +176,7 @@
                 </form>           
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary arabicfont data-dismiss="modal">اغلاق</button>
+            <button type="button" class="btn btn-secondary arabicfont data-dismiss="modal"">اغلاق</button>
             </div>
         </div>
         </div>
@@ -215,8 +215,15 @@
     </script>
     <script>
         $(function(){
-          $('.datepicker').datepicker();
+          $('.datepicker').datepicker({
+            dateFormat: "yy-mm-dd",
+            title : "التاريخ",
+            monthNames: [ "يناير", "فبراير", "مارس", "ابريل", "ماي", "يونيو", "يوليوز", "غشت", "شتنبر", "اكتوبر", "نونبر", "دجنبر" ],
+            dayNamesShort: [ "الاثنين", "الثلاثاء", "الاربعاء", "الخميس", "الجمعة", "السبت", "الاحد" ],
+            dayNamesMin: [ "الاثن", "الثلاء", "الاربعاء", "الخمس", "الجة", "السبت", "الاحد" ]
+            });
         });
+        
     </script>
     
     {% block content %}

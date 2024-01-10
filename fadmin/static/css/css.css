@@ -85,7 +85,7 @@
     float: none;
     position: absolute;
     top: 50%;
-    left: 22%;
+    right: 100%;
     transform: translate(-50%, -50%);
     background-color: #04AA6D;
     color: white;

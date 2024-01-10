@@ -12,7 +12,6 @@ from datetime import date, timedelta
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 import json
-from reportlab.pdfgen import canvas
 from django.http import HttpResponse, JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from io import BytesIO

@@ -14,12 +14,12 @@
             </div>
             <div class="row">
                 <h3>تاريخ البداية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
-                <input type="text" class="datedebut">
+                <input type="text" class="form-control datedebut datepicker">
             </div>
             <br>
             <div class="row">
                 <h3>نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
-                <select name="typerapp">
+                <select name="typerapp" class="form-control">
                     {% for t in data0 %}
                     <option value="{{t.nom_typerapp}}">{{ t.nom_typerapp }}</option>
                     {% endfor %}
@@ -36,26 +36,30 @@
           </div>
           <div class="row">
               <h3>تاريخ النهاية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
-              <input type="text" class="datefin">
+              <input type="text" class="form-control datefin datepicker">
           </div>
           <br> 
           <div class="row">
             <!--search closet-->
-            <div>
-              <button class="btn btn-success ajax-call">البحث عن الملفات <i class="fa fa-search"></i></button>
-            </div>
+            
             <!-- end of search closet-->
           </div> 
         </div>
       </div>
       <!---->
-      <div class="row">
-        <div class="col-md">
-          <button class="btn btn-danger pdfbutton">Download Pdf</button>
-        </div>
-      </div>
+      
+      
     </div>
-        
+    <br>
+    <hr>
+    <div class="row">
+      <div class="col-md-6">
+        <button class="btn btn-success ajax-call">البحث عن الملفات <i class="fa fa-search"></i></button>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-danger pdfbutton">Download Pdf</button>
+      </div>
+    </div>        
   </div>         
   <hr>         
 <!---->
