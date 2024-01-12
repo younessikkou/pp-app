@@ -43,7 +43,7 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <h3 class="arabicfont">رقم محضر النيابة الضابطة القضائية  <i class="fa fa-file" style="font-size:24px"></i>:</h3>
-              <input type="text" class="form-control num_rapp ajax-rapp form-text">
+              <input type="text" class="form-control num_rapppj ajax-rapppj form-text">
             </div>
           </div>
         </div>
@@ -178,6 +178,78 @@
         // Clear existing content in the table
         select.empty();
         if (numrapp){
+          if (dataajax.item) {
+              dataajax.item.forEach(function(item) {
+                  select.append('<tr>');
+                  select.append('<td>' + item.date_arr + '</td>');
+                  select.append('<td>' + item.num_env + '</td>');
+                  select.append('<td>' + item.num_rapp_pj + '</td>');
+                  select.append('<td>' + item.num_rapp_pp + '</td>');
+                  select.append('<td>' + item.num_plaint + '</td>');
+                  select.append('<td>' + item.note + '</td>');
+                  select.append('</tr>');
+              });
+          } else {
+              // Add an empty row if there is no data
+              select.append('<tr>');
+              select.append('<td>' + " " + '</td>');
+              select.append('<td>' + " " + '</td>');
+              select.append('<td>' + " " + '</td>');
+              select.append('<td>' + " " + '</td>');
+              select.append('<td>' + " " + '</td>');
+              select.append('<td>' + " " + '</td>');
+              select.append('</tr>');
+          }
+      }else{
+        // Add an empty row if there is no data
+        select.append('<tr>');
+          select.append('<td>' + " " + '</td>');
+          select.append('<td>' + " " + '</td>');
+          select.append('<td>' + " " + '</td>');
+          select.append('<td>' + " " + '</td>');
+          select.append('<td>' + " " + '</td>');
+          select.append('<td>' + " " + '</td>');
+          select.append('</tr>');
+      }
+      },
+      error: function(xhr, status, error) { // Error handling
+      console.log("Error: " + error);
+      console.log("Status: " + status);
+      console.dir(xhr);
+      }
+  })
+});
+</script>
+<script>
+  $(".ajax-rapppj").keyup(function(){
+  var daterapp = $(".date_rapp").val();
+  var dateenre = $(".date_enre").val();
+  var typerapp = $(".type_rapp :selected").text();
+  var numrapp = $(".num_rapp").val();
+  var numplaint = $(".num_plaint").val();
+  var num_rapppj = $(".num_rapppj").val()
+  var form = $(this).closest("form");    
+  $.ajax({
+      url : ("rech"),
+      type: 'POST', 
+      data : {
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          'daterapp' : daterapp,
+          'dateenre' : dateenre,
+          'typerapp' : typerapp,
+          'numrapp' : numrapp,
+          'numplaint' : numplaint,
+          'num_rapppj' : num_rapppj,
+          'typesearch' : "numrapppj",
+      },
+      dataType : 'json',
+      success: function(dataajax) {
+        console.log(dataajax.item)
+        var select = $("#pj");
+        console.log(num_rapppj)
+        // Clear existing content in the table
+        select.empty();
+        if (num_rapppj){
           if (dataajax.item) {
               dataajax.item.forEach(function(item) {
                   select.append('<tr>');

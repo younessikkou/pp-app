@@ -57,7 +57,7 @@
         <button class="btn btn-success ajax-call">البحث عن الملفات <i class="fa fa-search"></i></button>
       </div>
       <div class="col-md-6">
-        <button class="btn btn-danger pdfbutton">Download Pdf</button>
+        <button class="btn btn-danger pdfbutton">تحميل المحاضر</button>
       </div>
     </div>        
   </div>         
@@ -115,30 +115,8 @@
 
 <script>
   $(".pdfbutton").click(function(){
-      var datedebut = $(".datedebut").val();
-      var datefin = $(".datefin").val();
-      var typerapp = $(".type_rapp option:selected").val();
-      var form = $(this).closest("form");
-      console.log(datedebut+"--"+datefin)
-      $.ajax({
-          url : ("pdfrapp"),
-          type: 'POST', 
-          data : {
-             csrfmiddlewaretoken: '{{ csrf_token }}',
-            'datedebut' : datedebut,
-            'datefin' : datefin,
-            'typerapp' : typerapp
-          },
-          dataType : 'json',
-          success: function(response){ 
-            console.log(response)           
-            },
-          error: function(xhr, status, error) { // Error handling
-          console.log("Error: " + error);
-          console.log("Status: " + status);
-          console.dir(xhr);
-          }
-      })
+    var element = document.getElementById("PDFcontent"); // This can be any HTML element
+    html2pdf(element);
   });
 </script>
 
@@ -170,7 +148,11 @@
                         select.append('<td>' + item.num_rapp_pj + '</td>');
                         select.append('<td>' + item.num_rapp_pp + '</td>');
                         select.append('<td>' + item.num_plaint + '</td>');
-                        select.append('<td>' + item.note + '</td>');
+                        if ( !item.note ){
+                          select.append('<td>' + " لا يوجد ملاحظات " + '</td>');
+                        }else{
+                          select.append('<td>' + item.note + '</td>');
+                        }
                         select.append('</tr>');                  
                     });            
             },

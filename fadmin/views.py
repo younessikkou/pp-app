@@ -77,34 +77,6 @@ class Fadm(APIView):
     print(dataajax)
     return JsonResponse(dataajax)
   
-  def ajax_pdf(request):
-    startdate = request.POST.get("datedebut")
-    enddate = request.POST.get("datefin")
-    fadmin = Fadmin.objects.filter(date_arr__range=[startdate, enddate])
-
-    # Convertir les données en format JSON
-    json_data = json.dumps(list(fadmin.values()), indent=2, cls=DjangoJSONEncoder)
-
-    # Créer un objet BytesIO pour stocker le contenu PDF
-    pdf_buffer = BytesIO()
-
-    # Créer le document PDF en utilisant ReportLab
-    p = canvas.Canvas(pdf_buffer)
-    p.drawString(100, 800, "Données au format JSON :")
-    p.drawString(100, 780, json_data)
-    p.save()
-
-    # Réinitialiser la position de lecture du buffer PDF à 0
-    pdf_buffer.seek(0)
-
-    # Créer un objet HttpResponse avec le type de contenu PDF
-    pdf_response = HttpResponse(pdf_buffer.read(), content_type='application/pdf')
-    pdf_response['Content-Disposition'] = 'inline; filename="rapport.pdf"'
-
-    # Retourner la réponse JSON avec les données JSON
-    return JsonResponse({'pdf_data': '', 'json_data': json_data})
-
-
 
   def submitrapp(request):
     # dictionary for initial data with 
@@ -198,6 +170,7 @@ class Fadm(APIView):
     numrapp = request.POST.get("numrapp")
     numplaint = request.POST.get("numplaint")
     typerapp = request.POST.get("typerapp")
+    num_rapppj = request.POST.get("num_rapppj")
     rapp = Type_rapp.objects.all()
     vide= Fadmin.objects.filter(num_rapp_pp__contains='vide')
     typerapp_id = 0
@@ -220,8 +193,14 @@ class Fadm(APIView):
       print("-------------"+numplaint)
       if fadmin:
         dataajax["item"] =list(fadmin.values())
+    elif(typesearch == "numrapppj"):
+      print(num_rapppj)
+      fadmin= Fadmin.objects.filter(num_rapp_pj__contains=num_rapppj) & Fadmin.objects.filter(type_rapp=typerapp_id)
+      print("-------------"+num_rapppj)
+      if fadmin:
+        dataajax["item"] =list(fadmin.values())
       else:
-        dataajax["item"] =list(vide.values())
+          dataajax["item"] =list(vide.values())
       print(dataajax)
     return JsonResponse(dataajax)
     
