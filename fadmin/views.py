@@ -8,13 +8,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from django.core.paginator import Paginator
 from django.views.generic import ListView
-from datetime import date, timedelta
 from django.contrib.auth.decorators import login_required
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 from django.http import HttpResponse, JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from io import BytesIO
+
 
 
 
@@ -26,7 +26,70 @@ class Fadm(APIView):
 
   def get(request):
     if request.user.is_authenticated:
-      fadmin= Fadmin.objects.all()
+      fadmin= Type_rapp.objects.all()
+      pj= Pjs.objects.all()
+      typerapp= Type_rapp.objects.all()
+      typepj= Type_pj.objects.all()
+      sayr= Fadmin.objects.filter(type_rapp=1).count()
+      osra= Fadmin.objects.filter(type_rapp=2).count()
+      chikayamo= Fadmin.objects.filter(type_rapp=3).count()
+      chikayaadiya= Fadmin.objects.filter(type_rapp=4).count()
+      print(chikayaadiya)
+      print(sayr)
+      print(osra)
+      print(chikayamo)
+      context ={} 
+      context['form']= FadminForm()
+      data = {
+        'sayr' : sayr,
+        'osra' : osra,
+        'chikayamo' : chikayamo,
+        'chikayaadiya' : chikayaadiya,
+        'data0' : typerapp,
+        'data1' : fadmin.values(),
+        'data2': list(typepj.values()),
+        'data3' : pj.values(),
+        'form' : FadminForm()
+      }
+      return render(request , 'fadmin/index.html' , data)
+    else:
+      return redirect('login')
+
+  def getstatistics(request):
+    if request.POST.get("source") == "load":
+      print("hi i; in load section")
+      aujourdhui = datetime.today()
+      enddate = aujourdhui.strftime('%Y-%m-%d')
+      startdate = aujourdhui - timedelta(days=30) 
+      startdate = startdate.strftime('%Y-%m-%d')
+      sayr= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=1).count()
+      osra= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=2).count()
+      chikayamo= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=3).count()
+      chikayaadiya= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=4).count()
+      dataajax={}
+      dataajax["sayr"]= sayr
+      dataajax["osra"]= osra
+      dataajax["chikayamo"]= chikayamo
+      dataajax["chikayaadiya"]= chikayaadiya
+    else:
+      startdate = request.POST.get("datedebut")
+      enddate = request.POST.get("datefin")
+      print(startdate+"---"+enddate)
+      sayr= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=1).count()
+      osra= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=2).count()
+      chikayamo= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=3).count()
+      chikayaadiya= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=4).count()
+      dataajax={}
+      dataajax["sayr"]= sayr
+      dataajax["osra"]= osra
+      dataajax["chikayamo"]= chikayamo
+      dataajax["chikayaadiya"]= chikayaadiya
+    return JsonResponse(dataajax)
+
+
+  def guichet(request):
+    if request.user.is_authenticated:
+      fadmin= Fadmin.objects.filter()
       typepj= Type_pj.objects.all()
       pj= Pjs.objects.all()
       typerapp= Type_rapp.objects.all()
@@ -47,7 +110,8 @@ class Fadm(APIView):
   def recherche(request):
     startdate = request.POST.get("datedebut")
     enddate = request.POST.get("datefin")
-    fadmin= Fadmin.objects.filter(date_arr__range=[enddate, startdate])
+    fadmin= Fadmin.objects.filter(date_arr__range=[startdate,enddate])
+    print(fadmin)
     typepj= Type_pj.objects.all()
     typerapp= Type_rapp.objects.all()
     pj= Pjs.objects.all()

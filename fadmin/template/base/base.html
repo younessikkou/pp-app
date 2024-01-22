@@ -26,6 +26,8 @@
  <link rel="stylesheet" href="{% static '/css/css.css' %}">
  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
  <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  <style>
     body {
     font-family: 'Cairo' !important;
@@ -49,7 +51,15 @@
     .arabicfont{
         font-size: 14px;
         font-family: 'Cairo' !important;
-        color: #000000;
+        color: black;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .arabicfont{
+        font-size: 14px;
+        font-family: 'Cairo' !important;
+        color: white;
         font-weight: bold;
         text-transform: uppercase;
     }
@@ -60,7 +70,7 @@
 </head> 
 
   
-<body class="body">
+<body class="body" class="max-w-7xl xl:max-w-[110rem] 2xl:max-w-[150rem]  mx-auto">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
@@ -82,14 +92,17 @@
                <div class="topnav-right">
                  <img src="{% static 'images/logo.png' %}" class="logo" alt="My image" style="margin-right:50px;">
                </div>
+               <div class="navbar">
+                <a href="{% url 'home' %}" class="active" class="arabicfont"><i class="fa fa-file"></i> الواجهة</a>
+              </div>
               <div class="navbar" data-toggle="modal" data-target="#exampleModal">
                 <a href="#" class="active" class="arabicfont"><i class="fa fa-plus"></i> اضافة محضر </a>
               </div>
               <div class="navbar">
-                <a href="{% url 'home' %}" class="arabicfont"><i class="fa fa-search"></i> البحث عن محضر </a>
+                <a href="{% url 'guichet' %}" class="active" class="arabicfont"><i class="fa fa-search"></i> البحث عن محضر </a>
               </div>
               <div class="navbar">
-                <a href="{% url 'recherche' %}" class="arabicfont"><i class="fa fa-save"></i> تحميل السجل </a>
+                <a href="{% url 'recherche' %}" class="active" class="arabicfont"><i class="fa fa-save"></i> تحميل السجل </a>
               </div>
               <div class="btn btn-success dropdown-toggle navbar-left"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 مرحبا {{ user.username }} 
@@ -147,9 +160,8 @@
                     
                         <div class="row">
                             <div class="col-6">
-                                <h6 class="pj-name">صنف الضابطة القضائية</h6>
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <h6 class="pj-name dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">صنف الضابطة القضائية</h6>
                                     <span class="arabicfont">البحث</span>
                                     </button>
                                     {% if data2 %}
@@ -229,6 +241,34 @@
         });
         
     </script>
+    <script>
+        $(".ajax-call").click(function(){
+            var datedebut = $(".datedebut").val();
+            var datefin = $(".datefin").val();
+            var typerapp = $(".type_rapp option:selected").val();
+            var form = $(this).closest("form");
+            console.log(datedebut+"--"+datefin)
+            $.ajax({
+                url : ("rechercherapp"),
+                type: 'POST', 
+                data : {
+                   csrfmiddlewaretoken: '{{ csrf_token }}',
+                  'datedebut' : datedebut,
+                  'datefin' : datefin,
+                  'typerapp' : typerapp
+                },
+                dataType : 'json',
+                success: function(dataajax){
+                               
+                  },
+                error: function(xhr, status, error) { // Error handling
+                console.log("Error: " + error);
+                console.log("Status: " + status);
+                console.dir(xhr);
+                }
+            })
+        });
+      </script>
     
     {% block content %}
     {% endblock %}

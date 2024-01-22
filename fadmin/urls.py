@@ -21,6 +21,8 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('',Fadm.get, name='home'),
+    path('statistics',Fadm.getstatistics, name='statistics'),
+    path('guichet',Fadm.guichet, name='guichet'),
     path('submitrapp',Fadm.submitrapp, name='submittrapp'),
     path('delete_item/<id>',Fadm.delete_item, name='delete_item'),
     path('ajax_pj',Fadm.ajax_pj, name='ajax_pj'),
