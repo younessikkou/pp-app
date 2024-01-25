@@ -30,5 +30,6 @@ urlpatterns = [
     path('searching',Fadm.ajax_search, name='chercher'),
     path('logout',auth_views.LogoutView.as_view(), name='logout'),
     path('recherche',Fadm.recherche, name='recherche'),
-    path('rechercherapp',Fadm.ajax_rapport, name='rechercherapp'),     
+    path('rechercherapp',Fadm.ajax_rapport, name='rechercherapp'),
+    path('ihala',Fadm.ihala, name='ihala'),       
 ]

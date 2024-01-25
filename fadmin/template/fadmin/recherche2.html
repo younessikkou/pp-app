@@ -19,9 +19,9 @@
             <br>
             <div class="row">
                 <h3>نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
-                <select name="typerapp" class="form-control">
+                <select name="typerapp" class="form-control typerappajax">
                     {% for t in data0 %}
-                    <option value="{{t.nom_typerapp}}">{{ t.nom_typerapp }}</option>
+                    <option value="{{t.id}}" >{{ t.nom_typerapp }}</option>
                     {% endfor %}
                 </select>           
             </div>  
@@ -71,16 +71,20 @@
   <table class="table table-striped dt-responsive" style="width:100%">
     <thead class="thead_dark">
         <tr>
+            <th class="th_text arabicfont">id</th>
             <th class="th_text arabicfont">تاريخ التوصل</th>
             <th class="th_text arabicfont">رقم الارسال</th>
             <th class="th_text arabicfont">رقم المحضر الضابطة القضائية</th>
             <th class="th_text arabicfont">رقم محضر النيابة العامة</th>
             <th class="th_text arabicfont">رقم شكاية النيابة العامة</th> 
-            <th class="th_text arabicfont">ملاحظات</th>
+            <th class="th_text arabicfont">الملاحظات</th>
+            <th class="th_text arabicfont">اختيار</th>
         </tr>
     </thead>
     <tbody id="trapp">
         <tr>
+            <td> </td>
+            <td> </td>
             <td> </td>
             <td> </td>
             <td> </td>
@@ -111,6 +115,18 @@
 </nav>
 <!---->
 </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <button class="btn btn-success ihala">احالة الملفات <i class="fa fa-save"></i></button>
+    </div>
+    <div class="col-md-6">
+      <input type="text" class="form-control textihala">
+    </div>
+  </div>  
+</div>
+
 <!--Table closet-->
 
 <script>
@@ -124,9 +140,9 @@
   $(".ajax-call").click(function(){
       var datedebut = $(".datedebut").val();
       var datefin = $(".datefin").val();
-      var typerapp = $(".type_rapp option:selected").val();
+      var typerapp = $(".typerappajax option:selected").val();
       var form = $(this).closest("form");
-      console.log(datedebut+"--"+datefin)
+      console.log("itsme typerappy"+typerapp)
       $.ajax({
           url : ("rechercherapp"),
           type: 'POST', 
@@ -143,6 +159,7 @@
                         select.empty(); // Videz les options existantes
                         dataajax.item.forEach(function(item) {
                         select.append('<tr>');
+                        select.append('<td>' + item.id + '</td>');
                         select.append('<td>' + item.date_arr + '</td>');
                         select.append('<td>' + item.num_env + '</td>');
                         select.append('<td>' + item.num_rapp_pj + '</td>');
@@ -153,7 +170,10 @@
                         }else{
                           select.append('<td>' + item.note + '</td>');
                         }
-                        select.append('</tr>');                  
+                        select.append('</tr>');
+                        select.append('<td>' + '<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" data-dossier-id="' + item.id + '" id="flexCheckChecked">' + '</td>');
+                        
+                 
                     });            
             },
           error: function(xhr, status, error) { // Error handling
@@ -163,5 +183,47 @@
           }
       })
   });
+</script>
+<script>
+$(".ihala").click(function(){
+    var datedebut = $(".datedebut").val();
+    var datefin = $(".datefin").val();
+    var typerapp = $(".typerappajax option:selected").val();
+    var selectedDossiers = [];
+    var textihala = $(".textihala").val();
+    // Parcourez toutes les cases à cocher avec l'id "flexCheckChecked"
+    $("#trapp input[type='checkbox']:checked").each(function(){
+        // Récupérez l'ID du dossier stocké dans la propriété data
+        var dossierId = $(this).data('dossier-id');
+        selectedDossiers.push(dossierId);
+    });
+    console.log(selectedDossiers)
+    $.ajax({
+      url : ("ihala"),
+      type: 'POST',
+      data : {
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          'datedebut' : datedebut,
+          'datefin' : datefin,
+          'typerapp' : typerapp,
+          'id' : selectedDossiers,
+          'textihala' : textihala,
+      },
+      dataType : 'json',
+      success: function(dataajax){
+        alert("لقد تمت الاحالة")
+        },
+      error: function(xhr, status, error) { // Error handling
+      console.log("Error: " + error);
+      console.log("Status: " + status);
+      console.dir(xhr);
+      }
+  })
+
+    // Affichez les identifiants des dossiers sélectionnés dans la console
+
+    // Vous pouvez maintenant envoyer ces identifiants au backend si nécessaire
+});
+
 </script>
 {% endblock %}

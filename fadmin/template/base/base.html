@@ -48,7 +48,7 @@
     background-color: white;
     }
 
-    .arabicfont{
+    .arabicfont2{
         font-size: 14px;
         font-family: 'Cairo' !important;
         color: black;
@@ -93,16 +93,16 @@
                  <img src="{% static 'images/logo.png' %}" class="logo" alt="My image" style="margin-right:50px;">
                </div>
                <div class="navbar">
-                <a href="{% url 'home' %}" class="active" class="arabicfont"><i class="fa fa-file"></i> الواجهة</a>
+                <a href="{% url 'home' %}"  class="arabicfont2"><i class="fa fa-file"></i> الواجهة</a>
               </div>
               <div class="navbar" data-toggle="modal" data-target="#exampleModal">
-                <a href="#" class="active" class="arabicfont"><i class="fa fa-plus"></i> اضافة محضر </a>
+                <a href="#" class="arabicfont2"><i class="fa fa-plus"></i> اضافة محضر </a>
               </div>
               <div class="navbar">
-                <a href="{% url 'guichet' %}" class="active" class="arabicfont"><i class="fa fa-search"></i> البحث عن محضر </a>
+                <a href="{% url 'guichet' %}" class="arabicfont2"><i class="fa fa-search"></i> البحث عن محضر </a>
               </div>
               <div class="navbar">
-                <a href="{% url 'recherche' %}" class="active" class="arabicfont"><i class="fa fa-save"></i> تحميل السجل </a>
+                <a href="{% url 'recherche' %}" class="arabicfont2"><i class="fa fa-save"></i> تحميل السجل </a>
               </div>
               <div class="btn btn-success dropdown-toggle navbar-left"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 مرحبا {{ user.username }} 

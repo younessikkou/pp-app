@@ -135,7 +135,8 @@ class Fadm(APIView):
   def ajax_rapport(request):
     startdate = request.POST.get("datedebut")
     enddate = request.POST.get("datefin")
-    fadmin= Fadmin.objects.filter(date_arr__range=[startdate,enddate])
+    typerapp = request.POST.get("typerapp")
+    fadmin= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=typerapp)
     dataajax={}
     dataajax["item"] =list(fadmin.values())
     print(dataajax)
@@ -269,5 +270,23 @@ class Fadm(APIView):
     return JsonResponse(dataajax)
     
     
+  def ihala(request):
+    startdate = request.POST.get("datedebut")
+    enddate = request.POST.get("datefin")
+    typerapp = request.POST.get("typerapp")
+    fadmin= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=typerapp)
+    textihala = request.POST.get("textihala")
+    ids = request.POST.getlist('id[]')
+    for f in fadmin:
+        for i in ids:    
+            if str(f.id) == i:
+                # Mettez à jour le champ note avec la valeur de textihala
+                f.note = "تمت الاحالة على " + textihala 
+                f.save()  # Enregistrez les modifications dans la base de données
+                print("Champ note mis à jour pour l'ID", f.id)
+        
+    dataajax = {"message" : "boucle terminer"}
+    return JsonResponse(dataajax)
+
 
 
