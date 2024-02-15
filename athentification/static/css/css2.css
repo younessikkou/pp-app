@@ -89,10 +89,12 @@
   color: #EF3B3A;
 }
 body {
-  background: #76b852; /* fallback for old browsers */
-  background: rgb(141,194,111);
-  background: linear-gradient(90deg, rgba(141,194,111,1) 0%, rgba(118,184,82,1) 50%);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+  font-family: 'Cairo' !important;
+  line-height: 1.6;
+  background: url("{% static 'images/background.png'%}") no-repeat center center fixed;
+  -webkit-background-size:cover;
+  -moz--background-size:cover;
+  -o--background-size:cover;
+  background-size:auto;
+  background-color: rgba(231,172,70,0.1);   
 }

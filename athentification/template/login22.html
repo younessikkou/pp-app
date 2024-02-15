@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="2AW19lNtGYZy1znb9M09MYprrYwcfKuaLOLod6O9">
 
-    <title>نظام تسيير المحاضر </title>
+    <title>نظام تسيير الملفات و الأشيف</title>
     <link rel="icon" type="image/png" sizes="32x32" href="http://10.100.40.154/images/balance.png">
 
     <!-- Scripts -->
@@ -19,8 +19,8 @@
     <img src=http://10.100.40.154/images/justice.png alt="logo" class="w-44">
     <h1 class="font-extrabold text-2xl">
         <p class="flex flex-col justify-center items-center ms-2">
-            <span class="inline-flex">S. G. R</span>
-            <small class="text-sm underline underline-offset-4">نظام تسيير المحاضر</small>
+            <span class="inline-flex">S. A. D. A</span>
+            <small class="text-sm underline underline-offset-4">نظام تسيير الملفات و الأرشيف</small>
         </p>
     </h1>
 
@@ -29,15 +29,14 @@
         <!-- Session Status -->
     
     
-    <form method="POST" action="{% url 'login' %}" class="pb-3">
-        {% csrf_token %}
+    <form method="POST" action="http://10.100.40.154/login" class="pb-3">
         <input type="hidden" name="_token" value="2AW19lNtGYZy1znb9M09MYprrYwcfKuaLOLod6O9" autocomplete="off">        
         <!-- Email Address -->
         <div>
             <label class="block font-medium text-md text-black text-lg font-extrabold text-orange-950" for="email">
     اسم المستخدم
 </label>
-            <input  class="border-black focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm  block mt-1 w-full focus:ring-orange-700 focus:border-orange-800 border-orange-700" id="email" name="username" required="required" autofocus="autofocus" autocomplete="email">
+            <input  class="border-black focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm  block mt-1 w-full focus:ring-orange-700 focus:border-orange-800 border-orange-700" id="email" name="email" required="required" autofocus="autofocus" autocomplete="email">
 
         </div>
 
@@ -51,7 +50,9 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <button class="inline-flex items-center px-2 py-1 bg-blue-700 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 mr-3 bg-orange-700 dark:bg-orange-700 text-orange-200 dark:text-orange-200 hover:bg-orange-900 hover:text-orange-100 active:bg-orange-900 active:text-orange-100 active:ring-orange-800 focus:ring-orange-800 focus:bg-orange-800  shadow-lg">تسجيل الدخول</button>
+            <button type="submit" class="inline-flex items-center px-2 py-1 bg-blue-700 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 mr-3 bg-orange-700 dark:bg-orange-700 text-orange-200 dark:text-orange-200 hover:bg-orange-900 hover:text-orange-100 active:bg-orange-900 active:text-orange-100 active:ring-orange-800 focus:ring-orange-800 focus:bg-orange-800  shadow-lg">
+    تسجيل الدخول
+</button>
         </div>
     </form>
     </div>
@@ -59,8 +60,18 @@
     <footer class="px-8 pt-6 w-full fixed bottom-3">
         <div class="flex flex-col items-center justify-center py-2 bg-orange-800 rounded-lg shadow-2xl ">
             <p class="text-center italic text-white text-[0.72rem] 2xl:text-[1rem] font-bold px-2 leading-loose">
-                تم تطوير هذا البرنامج من طرف ايكو يونس منتدب قضائي بالمحكمةالابتدائية ببركان 
-                    2024 &copy; جميع الحقوق محفوظة.
+                بفضل الله، نجح فريق العمل المشترك بين منخرطي أوراش <span
+                    class="bg-orange-100 text-orange-900 rounded-full px-1 pb-1">الجلطي أحمد</span>، <span
+                    class="bg-orange-100 text-orange-900 rounded-full px-1 pb-1">معاش حمزة</span>، <span
+                    class="bg-orange-100 text-orange-900 rounded-full px-1 pb-1">جبوري علي</span> و <span
+                    class="bg-orange-100 text-orange-900 rounded-full px-1 pb-1">الرميش رضى</span>.
+                والإداريين
+                بالمحكمة الإبتدائية بركان، الأستاد <span class="bg-orange-100 text-orange-900 rounded-full px-1 pb-1">يونس البدراوي</span>
+                ،الأستاد <span class="bg-orange-100 text-orange-900 rounded-full px-1 pb-1">يونس إيكو</span>
+                والأستاد <span class="bg-orange-100 text-orange-900 rounded-full px-1 pb-1">إسماعيل أعربي</span>
+                والأستاد <span class="bg-orange-100 text-orange-900 rounded-full px-1 pb-1">فؤاد سراجي</span>.<br>
+                في إنجاح تطوير هذا التطبيق الذي سيساهم
+                بشكل كبير في تسهيل العمليات وتحسين الأداء في المحكمة الإبتدائية بركان.
             </p>
         </div>
     </footer>
@@ -91,7 +102,6 @@
 </script>
 </body>
 </html>
-
 {% endblock %}
 
 

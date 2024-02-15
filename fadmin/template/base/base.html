@@ -1,10 +1,17 @@
 {% load static %}
 {% load crispy_forms_tags %} 
 <!DOCTYPE html> 
-<html> 
-  
-<head> 
-  
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="2AW19lNtGYZy1znb9M09MYprrYwcfKuaLOLod6O9">
+
+    <title>نظام تسيير المحاضر </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="http://10.100.40.154/images/balance.png">
+
+    <!-- Scripts -->
+    <link rel="preload" as="style" href="http://10.100.40.154/build/assets/app-525d8dfc.css" /><link rel="modulepreload" href="http://10.100.40.154/build/assets/app-8f9ca40e.js" /><link rel="modulepreload" href="http://10.100.40.154/build/assets/_commonjsHelpers-725317a4.js" /><link rel="stylesheet" href="http://10.100.40.154/build/assets/app-525d8dfc.css" /><script type="module" src="http://10.100.40.154/build/assets/app-8f9ca40e.js"></script>
     <!-- Including the bootstrap CDN -->
     <link rel="stylesheet" href= 
 "https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
@@ -29,23 +36,14 @@
  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  <style>
-    body {
-    font-family: 'Cairo' !important;
-    line-height: 1.6;
-    background: url("{% static 'images/background.png'%}") no-repeat center center fixed;
-    -webkit-background-size:cover;
-    -moz--background-size:cover;
-    -o--background-size:cover;
-    background-size:auto;
-    background-color: rgba(231,172,70,0.1);
-    }
-    nav {
+
+    .navbar {
     background: url("{% static 'images/nav2.png'%}") no-repeat center center fixed;
     -webkit-background-size:cover;
     -moz--background-size:cover;
     -o--background-size:cover;
     background-size: cover;
-    background-color: white;
+    background-color: rgb(192, 170, 152);
     }
 
     .arabicfont2{
@@ -65,213 +63,213 @@
     }
  </style>
  <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+</head>
+<body class="text-gray-900 antialiased styled-scrollbar">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+        <div class="topnav-right">
+            <img src="{% static 'images/logo.png' %}" class="logo" alt="My image" style="margin-right:50px;">
+        </div>
+        <div class="navbar">
+            <a href="{% url 'home' %}"  class="arabicfont2"><i class="fa fa-file"></i> الواجهة</a>
+        </div>
+        <div class="navbar" data-toggle="modal" data-target="#exampleModal">
+            <a href="#" class="arabicfont2"><i class="fa fa-plus"></i> اضافة محضر </a>
+        </div>
+        <div class="navbar">
+            <a href="{% url 'guichet' %}" class="arabicfont2"><i class="fa fa-search"></i> البحث عن محضر </a>
+        </div>
+        <div class="navbar">
+            <a href="{% url 'recherche' %}" class="arabicfont2"><i class="fa fa-save"></i> تحميل السجل </a>
+        </div>
+        <div class="btn btn-default navbar-left">
+            مرحبا {{ user.username }} 
+        </div>
+        <div class="btn btn-danger" style="margin-right:900px;"> <a class="dropdown-item arabicfont" href="{% url 'logout' %}" data-value="">تسجيل الخروج</a></div> 
+        <div></div>
+        </div>
+    </nav>
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
 
 
-</head> 
-
-  
-<body class="body" class="max-w-7xl xl:max-w-[110rem] 2xl:max-w-[150rem]  mx-auto">
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
-    <script src="{% static '/js/js_datatable.js' %}"></script>
-    <script src="{% static '/js/js.js' %}"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+            <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+            <script src="{% static '/js/js_datatable.js' %}"></script>
+            <script src="{% static '/js/js.js' %}"></script>
+            <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+            <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 
 
 
-  
-    <!-- Creating a navigation bar using the
-         .navbar class of bootstrap -->
+        
+            <!-- Creating a navigation bar using the
+                .navbar class of bootstrap -->
 
-         <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container-fluid">
-               <div class="topnav-right">
-                 <img src="{% static 'images/logo.png' %}" class="logo" alt="My image" style="margin-right:50px;">
-               </div>
-               <div class="navbar">
-                <a href="{% url 'home' %}"  class="arabicfont2"><i class="fa fa-file"></i> الواجهة</a>
-              </div>
-              <div class="navbar" data-toggle="modal" data-target="#exampleModal">
-                <a href="#" class="arabicfont2"><i class="fa fa-plus"></i> اضافة محضر </a>
-              </div>
-              <div class="navbar">
-                <a href="{% url 'guichet' %}" class="arabicfont2"><i class="fa fa-search"></i> البحث عن محضر </a>
-              </div>
-              <div class="navbar">
-                <a href="{% url 'recherche' %}" class="arabicfont2"><i class="fa fa-save"></i> تحميل السجل </a>
-              </div>
-              <div class="btn btn-success dropdown-toggle navbar-left"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                مرحبا {{ user.username }} 
-              </div>
-              <div class="collapse navbar-collapse" id="navbarNavDarkDropdown" >
-                <div class="dropdown">
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item arabicfont" href="#" data-value="">الملف الشخصي</a>
-                    <a class="dropdown-item arabicfont" href="#" data-value="">الاعدادات</a>
-                    <a class="dropdown-item arabicfont" href="{% url 'logout' %}" data-value="">تسجيل الخروج</a>
+                
+            
+
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title arabicfont" id="exampleModalLabel">اضافة محضر</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-    
-
-    
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title arabicfont" id="exampleModalLabel">اضافة محضر</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-               <form action = "{% url 'submittrapp' %}" method = "post" data-validate-ajax-url = "{% url 'ajax_pj' %}">
-                <div class="container">
-                    {% csrf_token %} 
-                    <div class="row">
-                        <div class="col-12">
-                            {{ form.num_env|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            {{ form.num_rapp_pp|as_crispy_field }}
-                        </div>
-                        <div class="col-6">
-                            {{ form.num_rapp_pj|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            {{ form.num_plaint|as_crispy_field }}
-                        </div>
-                        <div class="col-6">  
-                            {{ form.note|as_crispy_field }}
-                        </div>
-                    </div>
-                    
-                    
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="dropdown">
-                                    <h6 class="pj-name dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">صنف الضابطة القضائية</h6>
-                                    <span class="arabicfont">البحث</span>
-                                    </button>
-                                    {% if data2 %}
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    {% for d in data2 %}
-                                    <a class="dropdown-item ajax-call" href="#" data-value="{{ d.name_pj }}">{{ d.name_pj }}</a>
-                                    {% endfor %}
-                                    </div>
-                                    {% endif %}
+                    <div class="modal-body">
+                    <form action = "{% url 'submittrapp' %}" method = "post" data-validate-ajax-url = "{% url 'ajax_pj' %}">
+                        <div class="container">
+                            {% csrf_token %} 
+                            <div class="row">
+                                <div class="col-12">
+                                    {{ form.num_env|as_crispy_field }}
                                 </div>
                             </div>
-                            <div class="col">
-                                <select class="form-control" id="type_pj" name="type_pj">
-                                </select>
+                            <div class="row">
+                                <div class="col-6">
+                                    {{ form.num_rapp_pp|as_crispy_field }}
+                                </div>
+                                <div class="col-6">
+                                    {{ form.num_rapp_pj|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    {{ form.num_plaint|as_crispy_field }}
+                                </div>
+                                <div class="col-6">  
+                                    {{ form.note|as_crispy_field }}
+                                </div>
                             </div>
                             
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                {{ form.type_rapp|as_crispy_field }}
+                            
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="dropdown">
+                                            <h6 class="pj-name dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">صنف الضابطة القضائية</h6>
+                                            <span class="arabicfont">البحث</span>
+                                            </button>
+                                            {% if data2 %}
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            {% for d in data2 %}
+                                            <a class="dropdown-item ajax-call" href="#" data-value="{{ d.name_pj }}">{{ d.name_pj }}</a>
+                                            {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-control" id="type_pj" name="type_pj">
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        {{ form.type_rapp|as_crispy_field }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                            <button class="btn btn-success arabicfont" type="submit" value="Submit">حفظ المعلومات</button>
                             </div>
                         </div>
+                        </form>           
                     </div>
-                    <div>
-                    <button class="btn btn-success arabicfont" type="submit" value="Submit">حفظ المعلومات</button>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary arabicfont data-dismiss="modal"">اغلاق</button>
                     </div>
                 </div>
-                </form>           
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary arabicfont data-dismiss="modal"">اغلاق</button>
-            </div>
-        </div>
-        </div>
-    </div>
-
-
-
-    <script>
-        $(".ajax-call").click(function(){
-            event.preventDefault(); // Prevent the default action of the link
-            //var a = $("#ajax-data").val();
-            var form = $(this).closest("form");
-            var a = $(this).attr('data-value');
-            console.log(a);
-            $.ajax({
-                url : form.attr("data-validate-ajax-url"),
-                type: 'POST', 
-                data : {
-                    'ajaxdata' : a
-                },
-                dataType : 'json',
-                success: function(dataajax){
-                    var select = $("#type_pj");
-                    select.empty(); // Videz les options existantes
-                    dataajax.list_pj.forEach(function(item) {
-                    select.append('<option>' + item.name + '</option>');
+                </div>
+                
+            <script>
+                $(".ajax-call").click(function(){
+                    event.preventDefault(); // Prevent the default action of the link
+                    //var a = $("#ajax-data").val();
+                    var form = $(this).closest("form");
+                    var a = $(this).attr('data-value');
+                    console.log(a);
+                    $.ajax({
+                        url : form.attr("data-validate-ajax-url"),
+                        type: 'POST', 
+                        data : {
+                            'ajaxdata' : a
+                        },
+                        dataType : 'json',
+                        success: function(dataajax){
+                            var select = $("#type_pj");
+                            select.empty(); // Videz les options existantes
+                            dataajax.list_pj.forEach(function(item) {
+                            select.append('<option>' + item.name + '</option>');
+                        });
+                        },
+                        error: function(xhr, status, error) { // Error handling
+                        console.log("Error: " + error);
+                        console.log("Status: " + status);
+                        console.dir(xhr);
+                        }
+                    })
                 });
-                },
-                error: function(xhr, status, error) { // Error handling
-                console.log("Error: " + error);
-                console.log("Status: " + status);
-                console.dir(xhr);
-                }
-            })
-        });
-    </script>
-    <script>
-        $(function(){
-          $('.datepicker').datepicker({
-            dateFormat: "yy-mm-dd",
-            title : "التاريخ",
-            monthNames: [ "يناير", "فبراير", "مارس", "ابريل", "ماي", "يونيو", "يوليوز", "غشت", "شتنبر", "اكتوبر", "نونبر", "دجنبر" ],
-            dayNamesShort: [ "الاثنين", "الثلاثاء", "الاربعاء", "الخميس", "الجمعة", "السبت", "الاحد" ],
-            dayNamesMin: [ "الاثن", "الثلاء", "الاربعاء", "الخمس", "الجة", "السبت", "الاحد" ]
-            });
-        });
-        
-    </script>
-    <script>
-        $(".ajax-call").click(function(){
-            var datedebut = $(".datedebut").val();
-            var datefin = $(".datefin").val();
-            var typerapp = $(".type_rapp option:selected").val();
-            var form = $(this).closest("form");
-            console.log(datedebut+"--"+datefin)
-            $.ajax({
-                url : ("rechercherapp"),
-                type: 'POST', 
-                data : {
-                   csrfmiddlewaretoken: '{{ csrf_token }}',
-                  'datedebut' : datedebut,
-                  'datefin' : datefin,
-                  'typerapp' : typerapp
-                },
-                dataType : 'json',
-                success: function(dataajax){
-                               
-                  },
-                error: function(xhr, status, error) { // Error handling
-                console.log("Error: " + error);
-                console.log("Status: " + status);
-                console.dir(xhr);
-                }
-            })
-        });
-      </script>
-    
-    {% block content %}
-    {% endblock %}
+            </script>
+            <script>
+                $(function(){
+                $('.datepicker').datepicker({
+                    dateFormat: "yy-mm-dd",
+                    title : "التاريخ",
+                    monthNames: [ "يناير", "فبراير", "مارس", "ابريل", "ماي", "يونيو", "يوليوز", "غشت", "شتنبر", "اكتوبر", "نونبر", "دجنبر" ],
+                    dayNamesShort: [ "الاثنين", "الثلاثاء", "الاربعاء", "الخميس", "الجمعة", "السبت", "الاحد" ],
+                    dayNamesMin: [ "الاثن", "الثلاء", "الاربعاء", "الخمس", "الجة", "السبت", "الاحد" ]
+                    });
+                });
+                
+            </script>
+            <script>
+                $(".ajax-call").click(function(){
+                    var datedebut = $(".datedebut").val();
+                    var datefin = $(".datefin").val();
+                    var typerapp = $(".type_rapp option:selected").val();
+                    var form = $(this).closest("form");
+                    console.log(datedebut+"--"+datefin)
+                    $.ajax({
+                        url : ("rechercherapp"),
+                        type: 'POST', 
+                        data : {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        'datedebut' : datedebut,
+                        'datefin' : datefin,
+                        'typerapp' : typerapp
+                        },
+                        dataType : 'json',
+                        success: function(dataajax){
+                                    
+                        },
+                        error: function(xhr, status, error) { // Error handling
+                        console.log("Error: " + error);
+                        console.log("Status: " + status);
+                        console.dir(xhr);
+                        }
+                    })
+                });
+            </script>
+
+            {% block content %}
+            {% endblock %}
+    </div><!--here im-->
+
+            
+            
+            
+</body>
+
 </body> 
   
 </html> 
+
+
+

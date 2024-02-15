@@ -14,7 +14,7 @@
             </div>
             <div class="row">
                 <h3>تاريخ البداية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
-                <input type="text" class="form-control datedebut datepicker">
+                <input type="text" class="form-control datedebut datepicker"  placeholder="تاريخ البداية">
             </div>
             <br>
             <div class="row">
@@ -36,7 +36,7 @@
           </div>
           <div class="row">
               <h3>تاريخ النهاية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
-              <input type="text" class="form-control datefin datepicker">
+              <input type="text" class="form-control datefin datepicker"  placeholder="تاريخ النهاية">
           </div>
           <br> 
           <div class="row">
@@ -114,19 +114,21 @@
   </ul>
 </nav>
 <!---->
-</div>
 
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
-      <button class="btn btn-success ihala">احالة الملفات <i class="fa fa-save"></i></button>
+    <div class="col-md-4">
+      <button class="btn btn-success ihala">احالة الملفات</button>
     </div>
-    <div class="col-md-6">
-      <input type="text" class="form-control textihala">
+    <div class="col-md-4">
+      <input type="text" class="form-control textihala" placeholder="شعبة الاحالة">
+    </div>
+    <div class="col-md-4">
+      <input type="text" class="form-control datepicker dateihala" placeholder="المرجوا اختيار تاريخ الاحالة">
     </div>
   </div>  
 </div>
-
+  
 <!--Table closet-->
 
 <script>
@@ -190,7 +192,9 @@ $(".ihala").click(function(){
     var datefin = $(".datefin").val();
     var typerapp = $(".typerappajax option:selected").val();
     var selectedDossiers = [];
-    var textihala = $(".textihala").val();
+    var dateihala = $(".dateihala").val();
+    var textihala = $(".textihala").val() +" في تاريخ "+  dateihala;
+    
     // Parcourez toutes les cases à cocher avec l'id "flexCheckChecked"
     $("#trapp input[type='checkbox']:checked").each(function(){
         // Récupérez l'ID du dossier stocké dans la propriété data
