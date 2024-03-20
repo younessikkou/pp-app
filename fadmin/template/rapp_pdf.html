@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport PDF</title>
+    <style>
+        /* Styles CSS pour le formatage du PDF */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>لائحة المحاضر</h1>
+<!--Table closet-->
+<div class="container" id="PDFcontent">
+    <table class="table table-striped dt-responsive" style="width:100%">
+      <thead class="thead_dark">
+          <tr>
+              <th class="th_text arabicfont">تاريخ التوصل</th>
+              <th class="th_text arabicfont">الملاحظات</th>
+              <th class="th_text arabicfont">رقم شكاية النيابة العامة</th> 
+              <th class="th_text arabicfont">رقم محضر النيابة العامة</th>
+              <th class="th_text arabicfont">رقم المحضر الضابطة القضائية</th>
+              <th class="th_text arabicfont">نوع الضابطة</th>
+              <th class="th_text arabicfont">رقم الارسال</th>
+              
+              
+              
+              
+          </tr>
+      </thead>
+      <tbody id="trapp">
+        {% for item in data %}
+            <tr>
+                <td> {{ item.date_arr|default:"غير متوفر" }} </td>
+                <td> {{ item.note|default:"غير متوفر" }} </td>
+                <td> {{ item.num_plaint|default:"غير متوفر" }} </td>
+                <td> {{ item.num_rapp_pp|default:"غير متوفر" }} </td>
+                <td> {{ item.num_rapp_pj|default:"غير متوفر" }} </td>
+                <td> {{ item.type_pj|default:"غير متوفر" }} </td>
+                <td> {{ item.num_env|default:"غير متوفر" }} </td>  
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

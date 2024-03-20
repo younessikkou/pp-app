@@ -2,118 +2,106 @@
 {% load static %}
 
 {% block content %}
-
 <!--modal filtring search-->
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <!--date fadmin start picker-->
-          <div class="container">
-            <div class="row">
-              <h2 class="py-2"> <h2>
-            </div>
-            <div class="row">
-                <h3>تاريخ البداية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
-                <input type="text" class="form-control datedebut datepicker"  placeholder="تاريخ البداية">
-            </div>
-            <br>
-            <div class="row">
-                <h3>نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
-                <select name="typerapp" class="form-control typerappajax">
-                    {% for t in data0 %}
-                    <option value="{{t.id}}" >{{ t.nom_typerapp }}</option>
-                    {% endfor %}
-                </select>           
-            </div>  
-          </div>
-      </div>
-      <!---->
-      <!--date fadmin start picker-->
-      <div class="col-md-6">
-        <div class="container">
-          <div class="row">
-            <h2 class="py-2"> </h2>
-          </div>
-          <div class="row">
-              <h3>تاريخ النهاية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
-              <input type="text" class="form-control datefin datepicker"  placeholder="تاريخ النهاية">
-          </div>
-          <br> 
-          <div class="row">
-            <!--search closet-->
-            
-            <!-- end of search closet-->
-          </div> 
-        </div>
-      </div>
-      <!---->
-      
-      
-    </div>
-    <br>
-    <hr>
-    <div class="row">
-      <div class="col-md-6">
-        <button class="btn btn-success ajax-call">البحث عن الملفات <i class="fa fa-search"></i></button>
-      </div>
-      <div class="col-md-6">
-        <button class="btn btn-danger pdfbutton">تحميل المحاضر</button>
-      </div>
-    </div>        
-  </div>         
-  <hr>         
-<!---->
-   
 
+<h3>{{ context.error }}</h3>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <!--date fadmin start picker-->
+      <div class="container">
+        <div class="row">
+          <h2 class="py-2"> <h2>
+        </div>
+        <div class="row">
+          <h3>تاريخ البداية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
+          <input type="text" class="form-control datedebut datepicker"  placeholder="تاريخ البداية">
+        </div>
+        <br>
+        <div class="row">
+          <h3>نوع المحضر <i class="fa fa-file" style="font-size:24px"></i>:</h3>
+          <select name="typerapp" class="form-control typerappajax">
+            {% for t in data0 %}
+            <option value="{{t.id}}" >{{ t.nom_typerapp }}</option>
+            {% endfor %}
+          </select>           
+        </div>  
+      </div>
+    </div>
+    <!---->
+    <!--date fadmin start picker-->
+    <div class="col-md-6">
+      <div class="container">
+        <div class="row">
+          <h2 class="py-2"> </h2>
+        </div>
+        <div class="row">
+          <h3>تاريخ النهاية  <i class="fa fa-calendar" style="font-size:24px"></i>:</h3>
+          <input type="text" class="form-control datefin datepicker"  placeholder="تاريخ النهاية">
+        </div>
+        <br> 
+        <div class="row">
+          <!--search closet-->
+          
+          <!-- end of search closet-->
+        </div> 
+      </div>
+    </div>
+    <!---->
+  </div>
+  <br>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <button class="btn btn-success ajax-call">البحث عن الملفات <i class="fa fa-search"></i></button>
+    </div>
+    <div class="col-md-6">
+      <button class="btn btn-danger rappdownload">تحميل المحاضر</button>
+    </div>
+  </div>        
+</div>         
+<hr>         
 
 <!--Table closet-->
-<div class="container" id="PDFcontent">
+<!--Table closet-->
+<div class="container" id="PDFcontent" style="max-height: 400px; overflow-y: scroll;">
   <table class="table table-striped dt-responsive" style="width:100%">
     <thead class="thead_dark">
-        <tr>
-            <th class="th_text arabicfont">id</th>
-            <th class="th_text arabicfont">تاريخ التوصل</th>
-            <th class="th_text arabicfont">رقم الارسال</th>
-            <th class="th_text arabicfont">رقم المحضر الضابطة القضائية</th>
-            <th class="th_text arabicfont">رقم محضر النيابة العامة</th>
-            <th class="th_text arabicfont">رقم شكاية النيابة العامة</th> 
-            <th class="th_text arabicfont">الملاحظات</th>
-            <th class="th_text arabicfont">اختيار</th>
-        </tr>
+      <tr>
+        <th class="th_text arabicfont">id</th>
+        <th class="th_text arabicfont">تاريخ التوصل</th>
+        <th class="th_text arabicfont">رقم الارسال</th>
+        <th class="th_text arabicfont">رقم المحضر الضابطة القضائية</th>
+        <th class="th_text arabicfont">رقم محضر النيابة العامة</th>
+        <th class="th_text arabicfont">رقم شكاية النيابة العامة</th> 
+        <th class="th_text arabicfont">الملاحظات</th>
+        <th class="th_text arabicfont">تعديل</th>
+        <th class="th_text arabicfont">حذف</th>
+        <th class="th_text arabicfont">اختيار</th>
+
+       <!-- <th class="th_text arabicfont">اختيار</th>-->
+      </tr>
     </thead>
     <tbody id="trapp">
-        <tr>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-        </tr>
+      <!-- Exemple de ligne -->
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <!--<td><input class="form-check-input" type="checkbox" value=""></td>-->
+      </tr>
+      <!-- Ajoutez ici d'autres lignes en JavaScript lors de la récupération des données -->
     </tbody>
   </table>
 </div>
-  <!--paginator-->
-<nav aria-label="...">
-  <ul class="pagination" style="margin-right: 700px;">
-    {% if page_obj.has_previous %}
-    <li class="page-item">
-      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">السابق</a>
-    </li>
-    {% endif %}
-    {% for p in page_obj.paginator %}
-    <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
-    {% endfor %}
-    {% if page_obj.has_next %}
-    <li class="page-item">
-      <a class="page-link" href="?page={{ page_obj.next_page_number }}">التالي</a>
-    </li>
-    {% endif %}
-  </ul>
-</nav>
-<!---->
+
 
 <div class="container">
   <div class="row">
@@ -128,15 +116,11 @@
     </div>
   </div>  
 </div>
-  
-<!--Table closet-->
 
-<script>
-  $(".pdfbutton").click(function(){
-    var element = document.getElementById("PDFcontent"); // This can be any HTML element
-    html2pdf(element);
-  });
-</script>
+<!--modal filtring search-->
+
+<!-- Votre code HTML existant -->
+<!--Table closet-->
 
 <script>
   $(".ajax-call").click(function(){
@@ -158,34 +142,39 @@
           success: function(dataajax){
               console.log(dataajax.item)
               var select = $("#trapp");
-                        select.empty(); // Videz les options existantes
-                        dataajax.item.forEach(function(item) {
-                        select.append('<tr>');
-                        select.append('<td>' + item.id + '</td>');
-                        select.append('<td>' + item.date_arr + '</td>');
-                        select.append('<td>' + item.num_env + '</td>');
-                        select.append('<td>' + item.num_rapp_pj + '</td>');
-                        select.append('<td>' + item.num_rapp_pp + '</td>');
-                        select.append('<td>' + item.num_plaint + '</td>');
-                        if ( !item.note ){
-                          select.append('<td>' + " لا يوجد ملاحظات " + '</td>');
-                        }else{
-                          select.append('<td>' + item.note + '</td>');
-                        }
-                        select.append('</tr>');
-                        select.append('<td>' + '<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" data-dossier-id="' + item.id + '" id="flexCheckChecked">' + '</td>');
-                        
-                 
-                    });            
-            },
+              select.empty(); // Videz les options existantes
+              dataajax.item.forEach(function(item) {
+                  var row = '<tr>';
+                  row += '<td>' + item.id + '</td>';
+                  row += '<td>' + item.date_arr + '</td>';
+                  row += '<td>' + (item.num_env ? item.num_env : "غير متوفر") + '</td>';
+                  row += '<td>' + (item.num_rapp_pj ? item.num_rapp_pj : "غير متوفر") + '</td>';
+                  row += '<td>' + (item.num_rapp_pp ? item.num_rapp_pp : "غير متوفر") + '</td>';
+                  row += '<td>' + (item.num_plaint ? item.num_plaint : "غير متوفر") + '</td>';
+                  row += '<td>' + (item.note ? item.note : "لا يوجد ملاحظات") + '</td>';
+                  row += '<td><a href="update/'+item.id+'/"><i class="fa fa-pen" aria-hidden="true"></i></a></td>';
+                  row += '<td><a href="delete/'+item.id+'"><i class="fa fa-trash" style="color:red"></i></a></td>';
+                  row += '<td><input type="checkbox" value="data-dossier-id="' + item.id + '"></input></td>';
+
+                  
+                  // Ajoutez la case à cocher dans la même cellule que les autres données
+                  
+
+                  row += '</tr>';
+                  
+                  select.append(row);
+              });            
+          },
           error: function(xhr, status, error) { // Error handling
-          console.log("Error: " + error);
-          console.log("Status: " + status);
-          console.dir(xhr);
+              console.log("Error: " + error);
+              console.log("Status: " + status);
+              console.dir(xhr);
           }
       })
   });
-</script>
+  </script>
+  
+
 <script>
 $(".ihala").click(function(){
     var datedebut = $(".datedebut").val();
@@ -229,5 +218,50 @@ $(".ihala").click(function(){
     // Vous pouvez maintenant envoyer ces identifiants au backend si nécessaire
 });
 
+</script>
+
+
+<!--pdf download-->
+<script>
+$(".rappdownload").click(function(){
+    var datedebut = $(".datedebut").val();
+    var datefin = $(".datefin").val();
+    var typerapp = $(".typerappajax option:selected").val();
+    
+    $.ajax({
+        url: "rappdownload",
+        type: 'POST', 
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            'datedebut': datedebut,
+            'datefin': datefin,
+            'typerapp': typerapp
+        },
+        xhrFields: {
+          responseType: 'blob' // Définir le type de réponse comme un objet blob
+        },
+        success: function(data, status, xhr) {
+            var blob = new Blob([data], { type: 'application/pdf' });
+            saveAs(blob, 'donnees.pdf'); // Télécharger le fichier PDF en utilisant FileSaver.js
+        },
+        error: function(xhr, status, error) { 
+            console.log("Erreur lors du téléchargement du fichier PDF : " + error);
+        }
+    });
+});
+</script>
+
+<script>
+$.ajax({
+  // Votre code AJAX ici
+  success: function(response) {
+      // Remplacer le contenu de votre div de pagination avec la pagination renvoyée depuis le serveur
+      $('#pagination-container').html(response.pagination_html);
+  },
+  error: function(xhr, status, error) {
+      console.log("Erreur: " + error);
+      console.dir(xhr);
+  }
+});
 </script>
 {% endblock %}

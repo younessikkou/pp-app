@@ -17,8 +17,8 @@ class Auth(APIView):
         if request.method == "POST":
             form = UserForm(request.POST)
             if form.is_valid():
-                form.save()
-                auth_login(request,user)
+                user = form.save()
+                login(request, user)  # Log in the user after registration
                 redirect('registre')
         return render(request, 'registration.html',{"form":form})
 

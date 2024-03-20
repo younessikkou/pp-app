@@ -40,18 +40,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'fadmin',
     'crispy_forms',
-    'athentification'
+    'athentification',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware' , 
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware' ,
 ]
 
 ROOT_URLCONF = 'pp_admin.urls'
@@ -141,3 +142,8 @@ LOGIN_REDIRECT_URL = "login"
 
 LOGOUT_REDIRECT_URL = "login"
 
+SESSION_EXPIRE_SECONDS = 120 # Expire after 30 minutes
+
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True 

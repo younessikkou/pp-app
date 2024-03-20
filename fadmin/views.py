@@ -14,6 +14,11 @@ import json
 from django.http import HttpResponse, JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from io import BytesIO
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import xlsxwriter
+from django.contrib.messages import add_message
+from django.contrib import messages 
 
 
 
@@ -57,7 +62,6 @@ class Fadm(APIView):
 
   def getstatistics(request):
     if request.POST.get("source") == "load":
-      print("hi i; in load section")
       aujourdhui = datetime.today()
       enddate = aujourdhui.strftime('%Y-%m-%d')
       startdate = aujourdhui - timedelta(days=30) 
@@ -74,7 +78,6 @@ class Fadm(APIView):
     else:
       startdate = request.POST.get("datedebut")
       enddate = request.POST.get("datefin")
-      print(startdate+"---"+enddate)
       sayr= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=1).count()
       osra= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=2).count()
       chikayamo= Fadmin.objects.filter(date_arr__range=[startdate,enddate]).filter(type_rapp=3).count()
@@ -150,9 +153,22 @@ class Fadm(APIView):
 
     # add the dictionary during initialization
     form = FadminForm(request.POST or None)
+    type_pj = request.POST.get('num_rapp_pj')
+    fadmin = Fadmin.objects.all()
+    pjs = Pjs.objects.all()
+    for p in pjs:
+      if p.indice == type_pj:
+         type_pj = p.name   
+    for f in fadmin:
+      print("im testing -----")
+      print(type_pj)
+      print(f.type_pj)
+      if f.type_pj==type_pj:
+          context['error'] = "هذا المحضر موجود في عاقدة البيانات"
+          return render(request,'fadmin/recherche2.html', context)
+
     if form.is_valid():
       instance = form.save(commit=False)
-
       # Modification de l'objet
       # hna kansavi form dyal rapp bla type_pj ta nrecuperer type_pj bohdo a partir mn name hiya request.POST.get('type_pj')
       type_pj = request.POST.get('type_pj')
@@ -166,17 +182,17 @@ class Fadm(APIView):
             context['error'] = "Invalid 'type_pj' selected."
             return render(request, 'recherche.html', context)
 
-    # Enregistrer l'objet après modification
-      instance.save()
-
-      return redirect('home')
-    else:
-      context['error']="form is not valid"
-      return render(request,'fadmin/recherche2.html', context)
+      # Enregistrer l'objet après modification
+        instance.save()
+        add_message(request, messages.SUCCESS, 'لقد تمت الاضافة بنجاح')
+        return redirect('home')
+      else:
+        context['error']="form is not valid"
+        return render(request,'fadmin/recherche2.html', context)
 
   @login_required
-  def delete_item(request, id):
-    item = Fadmin.objects.get(id=id)
+  def delete_item(request, item_id):
+    item = Fadmin.objects.get(id=item_id)
     if item:
       try:
         item.delete()
@@ -184,7 +200,7 @@ class Fadm(APIView):
         context['form'] = form
         context['error'] = "Erreur."
         return render(request, 'recherche.html', context)
-    return redirect('home')
+    return redirect('home1')
 
 
   
@@ -289,4 +305,43 @@ class Fadm(APIView):
     return JsonResponse(dataajax)
 
 
+  @csrf_exempt
+  def rapportdownload(request):
+    startdate = request.POST.get("datedebut")
+    enddate = request.POST.get("datefin")
+    typerapp = request.POST.get("typerapp")
+    data = Fadmin.objects.filter(date_arr__range=[startdate, enddate]).filter(type_rapp=typerapp)
 
+    # Rendu des données dans un template HTML
+    html_string = render_to_string('rapp_pdf.html', {'data': data})
+
+    # Création du fichier PDF avec WeasyPrint
+    pdf_file = HTML(string=html_string).write_pdf()
+
+    # Réponse HTTP avec le PDF en pièce jointe
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="donnees.pdf"'
+    return response
+
+
+
+  def update_item(request, item_id):
+    fadmin = Fadmin.objects.get(id=item_id)
+
+    if request.method == 'POST':
+      # Create a form instance with the POST data and the existing object instance
+      form = FadminForm(request.POST, instance=fadmin)
+      if form.is_valid():
+        form.save()
+        # Success message or redirection after successful update
+        add_message(request, messages.SUCCESS, 'لقد تم التغيير بنجاح')
+        return redirect('home')  # Replace with your desired redirect URL
+      else:
+        # Handle form validation errors
+        context = {'form': form, 'errors': form.errors}
+        return render(request, 'fadmin/update_form.html', context)
+    else:
+      # GET request, populate the form with existing data
+      form = FadminForm(instance=fadmin)
+      context = {'form': form}
+      return render(request, 'fadmin/update_form.html', context)

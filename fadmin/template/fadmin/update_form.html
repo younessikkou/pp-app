@@ -1,0 +1,67 @@
+{% extends '../base/base.html' %}
+{% load crispy_forms_tags %} 
+{% load static %}
+
+{% block content %}
+ <!-- Modal -->
+
+        <form action="" method="post" data-validate-ajax-url="{% url 'ajax_pj' %}">
+            <div class="container">
+                {% csrf_token %} 
+                <div class="row">
+                    <div class="col-12">
+                        {{ form.num_env|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        {{ form.num_rapp_pp|as_crispy_field }}
+                    </div>
+                    <div class="col-6">
+                        {{ form.num_rapp_pj|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        {{ form.num_plaint|as_crispy_field }}
+                    </div>
+                    <div class="col-6">  
+                        {{ form.note|as_crispy_field }}
+                    </div>
+                </div>
+                
+                
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="dropdown">
+                                <h6 class="pj-name dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">صنف الضابطة القضائية</h6>
+                                <span class="arabicfont">البحث</span>
+                                </button>
+                                {% if data2 %}
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {% for d in data2 %}
+                                <a class="dropdown-item ajax-call" href="#" data-value="{{ d.name_pj }}">{{ d.name_pj }}</a>
+                                {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <select class="form-control" id="type_pj" name="type_pj">
+                            </select>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form.type_rapp|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                <button class="btn btn-success arabicfont" type="submit" value="Submit">حفظ المعلومات</button>
+                </div>
+            </div>
+            </form>           
+
+{% endblock %}
